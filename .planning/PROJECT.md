@@ -13,11 +13,14 @@ Securing the codebase in version control and validating the integrity of the dat
 - ✓ Astro SSR configuration with `@astrojs/cloudflare` adapter.
 - ✓ Initial Appwrite connection and custom admin dashboard structure.
 - ✓ Static layout and component structure.
+- ✓ Phase 1: Git repository connected and pushed to GitHub.
+- ✓ Phase 2: Appwrite integration verified (endpoint status and collection health).
+- ✓ Phase 3: Cloudflare Workers deployment successful.
 
 ### Active
-- [ ] Analyze and verify the Appwrite integration (data fetching, connection health, and environment variables).
-- [ ] Connect local git repository to the remote origin (`https://github.com/netcidade/spaziovascolare.git`).
-- [ ] Push all local codebase securely to the remote repository.
+- [ ] Centralize hardcoded Appwrite IDs in `src/pages/admin/dashboard.astro` to use `src/lib/appwrite.ts`.
+- [ ] Optimize admin dashboard by modularizing components.
+
 
 ### Out of Scope
 - Feature redesigns or UI changes — This phase focuses strictly on integration verification and version control.
