@@ -1,0 +1,300 @@
+---
+import { getTreatments } from "../lib/appwrite";
+import { STATIC_TREATMENTS } from "../lib/staticData";
+
+let treatments = STATIC_TREATMENTS;
+try {
+  const live = await getTreatments();
+  if (live.length > 0) treatments = live as typeof STATIC_TREATMENTS;
+} catch (_) {}
+---
+
+<section class="treatments" id="tratamentos">
+  <div class="container glass section-card">
+    <div class="section-header">
+      <div class="section-meta">Tratamentos</div>
+      <h2 class="section-title">
+        <span class="text-gradient"
+          >Tecnologia a favor da sua<br />Saúde Vascular</span
+        >
+      </h2>
+    </div>
+
+    <div class="treatments__grid">
+      {
+        treatments.map((t, i) => {
+          let size = "small";
+          if (i === 0) size = "large";
+          else if (i === 3 || i === 4) size = "medium";
+
+          return (
+            <div class={`bento-item ${size}`}>
+              <div class="bento-item__flare" />
+              <div class="bento-item__content-wrapper">
+                {(t as any).cover_url && (
+                  <div class="bento-item__image">
+                    <img
+                      src={(t as any).cover_url}
+                      alt={t.title}
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                <div class="bento-item__text">
+                  <div class="bento-item__header">
+                    <h3 class="bento-item__title">{t.title}</h3>
+                  </div>
+                    <div class="bento-item__desc" set:html={(() => {
+                        const desc = t.description || (t as any).desc || "";
+                        return desc.length > 500
+                          ? desc.substring(0, 500) + "..."
+                          : desc;
+                      })()} />
+                </div>
+              </div>
+            </div>
+          );
+        })
+      }
+
+      <div class="bento-item cta-card">
+        <h3>Pronto para transformar sua saúde?</h3>
+        <div class="cta-actions">
+          <a href="https://wa.me/5543991502223" class="btn-tech"
+            >Agendar Consulta</a
+          >
+          <a href="/tratamentos" class="btn-outline">Ver todos os Tratamentos</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .treatments {
+    padding-block: var(--space-xl);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-header {
+    margin-bottom: 4rem;
+  }
+
+  .section-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 4rem;
+    max-width: 20ch;
+  }
+
+  .treatments__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .bento-item {
+    position: relative;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 20px rgba(212, 10, 91, 0.03);
+    transition: all var(--dur) var(--ease);
+  }
+
+  .bento-item:hover {
+    border-color: var(--accent);
+    background: #fff;
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(212, 10, 91, 0.08);
+  }
+
+  .bento-item:hover .bento-item__flare {
+    opacity: 1;
+  }
+
+  .bento-item__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .bento-item__icon {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .bento-item__title {
+    font-size: 1.8rem;
+    color: var(--text);
+  }
+
+  .bento-item__desc {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+  }
+
+  /* Ajuste para a imagem não esticar a div */
+  .bento-item__image {
+    width: 400px;
+    height: 280px; /* Altura fixa para manter um padrão bonito */
+    flex-shrink: 0;
+  }
+
+  .bento-item__content-wrapper {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center; /* Centraliza imagem e texto verticalmente */
+  }
+
+  .bento-item__image {
+    flex-shrink: 0;
+    width: 240px;
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .bento-item__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .bento-item__text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  /* Se for pequeno, empilha */
+  .small .bento-item__content-wrapper {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .small .bento-item__image {
+    width: 100%;
+    height: 120px;
+  }
+
+  /* Layout automático ao tamanho */
+  .bento-item {
+    width: 100%;
+    min-height: auto;
+    padding: 2rem;
+  }
+  .cta-card {
+    background: linear-gradient(135deg, #fff, #fff1f2);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-outline {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.9rem 2rem !important;
+    border: 1.5px solid var(--accent) !important;
+    color: var(--accent) !important;
+    font-weight: 600 !important;
+    border-radius: 100px !important;
+    text-decoration: none !important;
+    background: transparent !important;
+    transition: all var(--dur) var(--ease) !important;
+    font-size: 0.95rem !important;
+    cursor: pointer !important;
+  }
+
+  .btn-outline:hover {
+    background: var(--accent) !important;
+    color: #fff !important;
+    box-shadow: 0 8px 20px var(--accent-glow) !important;
+    transform: translateY(-2px) !important;
+  }
+
+  .cta-card h3 {
+    font-size: 2.2rem;
+    color: var(--accent);
+  }
+
+  .bento-item__flare {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at center,
+      rgba(212, 10, 91, 0.05) 0%,
+      transparent 50%
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease);
+  }
+
+  /* Mobile */
+  /* Ajuste para mobile */
+  @media (max-width: 768px) {
+    .bento-item__content-wrapper {
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .bento-item__image {
+      width: 100%;
+      height: 200px;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+    }
+
+    .cta-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .cta-actions a {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .bento-grid {
+      grid-template-columns: 1fr;
+      grid-auto-rows: auto;
+    }
+    .large,
+    .medium,
+    .small,
+    .cta-card {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+  }
+</style>

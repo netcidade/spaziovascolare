@@ -1,0 +1,183 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import Treatments from "../components/Treatments.astro";
+import BlogCarousel from "../components/BlogCarousel.astro";
+import Contact from "../components/Contact.astro";
+import FAQ from "../components/FAQ.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout>
+  <Header />
+  <main>
+    <Hero />
+    <About />
+    <section class="cta-especialidades">
+      <div class="container">
+        <div class="cta-card glass section-card">
+          <h2 class="contact__title">
+            Atendimento Especializado em <span class="text-gradient"
+              >Tratamentos e Cirurgias</span
+            >
+          </h2>
+          <p>
+            Oferecemos o que há de mais moderno na medicina vascular. Escolha
+            abaixo a área de seu interesse para saber mais detalhes sobre os
+            procedimentos que realizamos.
+          </p>
+          <div class="cta-actions">
+            <a href="/tratamentos" class="btn-action primary">
+              Conhecer Tratamentos
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"></path></svg
+              >
+            </a>
+            <a href="/cirurgias" class="btn-action secondary">
+              Ver Cirurgias
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"></path></svg
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Google Reviews Widget -->
+    <section class="reviews-section">
+      <div class="container">
+        <div
+          id="google-reviews-widget"
+          data-query="Q2hJSk1VT0VUVUpENjVRUm1GRjU4aFB4U0Ew"
+          data-color="#d40a5b"
+          data-layout="carousel"
+        >
+        </div>
+      </div>
+    </section>
+    <script
+      src="https://c109xdeta1hhvdfpof4kens1.138.201.188.208.sslip.io/widget-loader.js"
+      async
+      is:inline></script>
+
+    <Contact />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* Global animations for reveal on scroll */
+  main :global(section) {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s var(--ease);
+  }
+
+  main :global(section.visible) {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Reviews Widget */
+  .reviews-section {
+    padding: 2rem 0 3rem;
+  }
+
+  /* CTA Especialidades */
+  .cta-especialidades {
+    padding: 2rem 0;
+  }
+  .cta-card {
+    text-align: center;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    border-radius: 32px;
+  }
+  .cta-card h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-family: var(--font-display);
+    line-height: 1.1;
+  }
+  .cta-card p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 600px;
+  }
+  @media (max-width: 1024px) {
+    .cta-card {
+      padding: 2.5rem 1rem;
+    }
+  }
+  .cta-actions {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border-radius: 100px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-size: 1rem;
+  }
+  .btn-action.primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(212, 10, 91, 0.2);
+  }
+  .btn-action.primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(212, 10, 91, 0.3);
+  }
+  .btn-action.secondary {
+    background: transparent;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+  }
+  .btn-action.secondary:hover {
+    background: rgba(212, 10, 91, 0.05);
+    transform: translateY(-3px);
+  }
+</style>
+
+<script>
+  // Reveal sections on scroll
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -100px 0px",
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll("section").forEach((section) => {
+    observer.observe(section);
+  });
+</script>

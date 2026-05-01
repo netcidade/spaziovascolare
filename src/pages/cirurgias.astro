@@ -1,0 +1,533 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/Footer.astro';
+import BlogCarousel from '../components/BlogCarousel.astro';
+import { STATIC_SURGERIES } from '../lib/staticData';
+
+let surgeries = STATIC_SURGERIES;
+
+try {
+  const { getSurgeries } = await import('../lib/appwrite');
+  const liveS = await getSurgeries();
+  if (liveS.length > 0) surgeries = liveS as typeof STATIC_SURGERIES;
+} catch (_) {}
+---
+
+<Layout
+  title="Cirurgias Vasculares — Dra. Mônica Arena"
+  description="Procedimentos cirúrgicos vasculares realizados pela Dra. Mônica Arena em Londrina: safenectomia, ablação laser endovenosa, microcirurgia de varizes e cirurgia arterial."
+>
+  <Header />
+
+  <main>
+    <!-- Page Hero -->
+    <section class="page-hero">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="/">Início</a>
+          <span>/</span>
+          <span>Cirurgias</span>
+        </div>
+        <div class="page-hero__grid">
+          <div class="page-hero__content">
+            <div class="section-meta">Procedimentos Cirúrgicos</div>
+            <h1 class="page-hero__title">
+              Cirurgias Vasculares<br />
+              <span class="text-gradient">com Precisão Máxima</span>
+            </h1>
+            <p class="page-hero__desc">
+              Com formação em grandes centros nacionais e
+              <strong>Fellowship no Arizona Heart Institute (EUA)</strong>,
+              a Dra. Mônica Arena realiza os procedimentos cirúrgicos mais avançados
+              disponíveis — da cirurgia aberta às técnicas endovasculares minimamente invasivas.
+            </p>
+            <a
+              href="https://wa.me/5543991502223?text=Olá%2C%20gostaria%20de%20uma%20avaliação%20cirúrgica"
+              class="btn-tech"
+              target="_blank" rel="noopener noreferrer"
+            >
+              Solicitar avaliação cirúrgica
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M5 12h14m-7-7 7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+
+          <!-- Side credential card -->
+          <div class="hero-credentials glass">
+            <div class="credential-item">
+              <div class="cred-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+                </svg>
+              </div>
+              <div>
+                <strong>Fellowship Internacional</strong>
+                <span>Arizona Heart Institute — Phoenix, EUA</span>
+              </div>
+            </div>
+            <div class="credential-item">
+              <div class="cred-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+                </svg>
+              </div>
+              <div>
+                <strong>+15 anos de prática</strong>
+                <span>Cirurgia Vascular em Londrina/PR</span>
+              </div>
+            </div>
+            <div class="credential-item">
+              <div class="cred-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+              </div>
+              <div>
+                <strong>Residência — Escola Paulista</strong>
+                <span>Cirurgia Vascular (UNIFESP/EPM)</span>
+              </div>
+            </div>
+            <div class="credential-item">
+              <div class="cred-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </div>
+              <div>
+                <strong>5 estrelas Google</strong>
+                <span>47+ avaliações verificadas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-hero__glow" aria-hidden="true"></div>
+    </section>
+
+    <!-- Surgeries List -->
+    <section class="surgeries-section">
+      <div class="container">
+        <div class="surgeries-list">
+          {surgeries.map((s, i) => (
+            <article class="surgery-row" data-index={i}>
+              <div class="surgery-row__flare" aria-hidden="true"></div>
+              
+              <div class="surgery-row__content">
+                {(s as any).cover_url && (
+                  <div class="surgery-row__image">
+                    <img src={(s as any).cover_url} alt={s.title} loading="lazy" />
+                  </div>
+                )}
+                
+                <div class="surgery-row__text">
+                  <div class="surgery-row__header">
+                    <h2 class="surgery-row__title">{s.title}</h2>
+                  </div>
+                  
+                  <div class="surgery-row__desc" set:html={s.description || (s as any).desc || ''} />
+
+                  <div class="surgery-row__pills">
+                    {s.duration && (
+                      <span class="pill">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        {s.duration}
+                      </span>
+                    )}
+                    {s.recovery && (
+                      <span class="pill">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                        {s.recovery}
+                      </span>
+                    )}
+                    {s.anesthesia && (
+                      <span class="pill">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                        </svg>
+                        {s.anesthesia}
+                      </span>
+                    )}
+                  </div>
+
+                  <div class="surgery-row__footer">
+                    <a href={`/cirurgias/${s.slug}`} class="btn-read-more">
+                      Saiba mais sobre esta cirurgia
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14m-7-7 7 7-7 7"/>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <!-- FAQ -->
+        <!-- FAQ -->
+        <FAQ 
+          page="cirurgias" 
+          title="Perguntas Frequentes" 
+          subtitle="Sobre cirurgias vasculares" 
+        />
+        </div>
+      </div>
+    </section>
+
+    <BlogCarousel category="Cirurgia" title="Cirurgias" />
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .page-hero {
+    padding-top: 10rem;
+    padding-bottom: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.06em;
+  }
+
+  .breadcrumb a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--accent); }
+
+  .page-hero__grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .page-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4.5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+
+  .page-hero__desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 2rem;
+    max-width: 56ch;
+  }
+
+  .page-hero__desc strong { color: var(--text); font-weight: 600; }
+
+  .page-hero__glow {
+    position: absolute;
+    top: -150px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(212,10,91,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* Credentials */
+  .hero-credentials {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(212, 10, 91, 0.12);
+  }
+
+  .credential-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(212, 10, 91, 0.07);
+    transition: background 0.25s;
+  }
+
+  .credential-item:last-child { border-bottom: none; }
+  .credential-item:hover { background: rgba(212,10,91,0.03); }
+
+  .cred-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    background: rgba(212, 10, 91, 0.08);
+    color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .credential-item strong {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 1px;
+  }
+
+  .credential-item span {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  /* Surgeries list */
+  .surgeries-section { padding-bottom: var(--space-xl, 7rem); }
+
+  .surgeries-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .surgery-row {
+    position: relative;
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 24px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .surgery-row:hover {
+    border-color: var(--accent);
+    background: #fff;
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(212, 10, 91, 0.1);
+  }
+
+  .surgery-row__content {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .surgery-row__image {
+    flex-shrink: 0;
+    width: 420px;
+    height: 300px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .surgery-row__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .surgery-row__text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .surgery-row__title {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 0.2rem;
+  }
+
+  .surgery-row__desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .surgery-row__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .surgery-row__footer {
+    display: flex;
+    margin-top: auto;
+  }
+
+  .btn-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    color: var(--accent);
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    border-bottom: 2px solid transparent;
+  }
+
+  .btn-read-more:hover {
+    gap: 1rem;
+    border-bottom-color: var(--accent);
+  }
+
+  .surgery-row__flare {
+    position: absolute;
+    top: -80%;
+    left: -30%;
+    width: 160%;
+    height: 160%;
+    background: radial-gradient(circle at 40% 40%, rgba(212, 10, 91, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .surgery-row:hover .surgery-row__flare { opacity: 1; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    color: var(--accent);
+    background: rgba(212, 10, 91, 0.06);
+    border: 1px solid rgba(212, 10, 91, 0.12);
+    padding: 0.4rem 0.8rem;
+    border-radius: 100px;
+  }
+
+  /* Related Blog */
+  .related-blog {
+    padding-bottom: var(--space-xl, 7rem);
+    background: linear-gradient(180deg, transparent, rgba(212, 10, 91, 0.02));
+  }
+
+  .related-blog__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .blog-card-mini {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(212, 10, 91, 0.08);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .blog-card-mini:hover {
+    transform: translateY(-5px);
+    border-color: rgba(212, 10, 91, 0.2);
+    box-shadow: 0 12px 32px rgba(212, 10, 91, 0.08);
+  }
+
+  .blog-card-mini__img {
+    aspect-ratio: 16/9;
+    overflow: hidden;
+  }
+
+  .blog-card-mini__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+
+  .blog-card-mini:hover .blog-card-mini__img img {
+    transform: scale(1.05);
+  }
+
+  .blog-card-mini__content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1;
+  }
+
+  .blog-card-mini__content h3 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-top: auto;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .page-hero__grid { grid-template-columns: 1fr; }
+    .hero-credentials { max-width: 480px; }
+    .related-blog__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .surgery-row__content {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .surgery-row__image {
+      width: 100%;
+      height: 240px;
+    }
+    .surgery-row__title { font-size: 1.8rem; }
+  }
+</style>
+
+<script>
+  // Staggered animation
+  document.querySelectorAll('.surgery-row').forEach((el) => {
+    const idx = Number((el as HTMLElement).dataset.index ?? 0);
+    (el as HTMLElement).style.opacity = '0';
+    (el as HTMLElement).style.transform = 'translateX(-16px)';
+    (el as HTMLElement).style.transition = 'all 0.6s cubic-bezier(0.16,1,0.3,1)';
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        setTimeout(() => {
+          (el as HTMLElement).style.opacity = '1';
+          (el as HTMLElement).style.transform = 'none';
+        }, idx * 100);
+        obs.disconnect();
+      }
+    }, { threshold: 0.1 });
+    obs.observe(el);
+  });
+</script>

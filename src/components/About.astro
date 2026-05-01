@@ -1,0 +1,220 @@
+---
+
+---
+
+<section class="about" id="sobre">
+  <div class="container glass section-card">
+    <div class="about__grid">
+      <div class="about__visual">
+        <div class="about__image-frame glass">
+          <img
+            src="/img/consultorio.png"
+            alt="Consultório Spazio Vascolare — Recepção Luxuosa"
+            class="about__image"
+          />
+        </div>
+        <div class="experience-card glass">
+          <span class="experience-num">15</span>
+          <span class="experience-label">Anos de Transformação</span>
+        </div>
+      </div>
+
+      <div class="about__content">
+        <div class="section-meta">Legado e Inovação</div>
+        <h2 class="about__title">Dra. Mônica Arena</h2>
+        <span class="about__subtitle">Cirurgiã Vascular | CRM-PR 12345</span>
+
+        <p class="about__text">
+          Formada pela <strong>Universidade Estadual de Londrina (UEL)</strong> e
+          com especialização pela <strong>Escola Paulista de Medicina</strong>,
+          a Dra. Mônica Arena consolidou sua expertise internacional como Fellow
+          no prestigiado <strong>Arizona Heart Institute</strong> (Phoenix, EUA).
+        </p>
+
+        <p class="about__text">
+          Sua abordagem une o rigor científico à tecnologia de ponta,
+          priorizando tratamentos minimamente invasivos que permitem uma
+          recuperação rápida e resultados estéticos de excelência para seus
+          pacientes.
+        </p>
+
+        <div class="credentials">
+          <div class="credential-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--accent)"
+              stroke-width="2"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span>Membro da SBACV</span>
+          </div>
+          <div class="credential-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--accent)"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+              <path d="M2 12h20"></path>
+            </svg>
+            <span>Fellowship Arizona (EUA)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    position: relative;
+    overflow: hidden;
+    padding-block: var(--space-xl);
+  }
+
+  .about__grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about__visual {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about__image-frame {
+    width: 100%;
+    /* aspect-ratio: 16 / 10;  Proporção mais horizontal para acompanhar texto */
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1); /* Vidro em vez de branco sólido */
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 40px rgba(212, 10, 91, 0.05);
+    position: relative;
+  }
+
+  .about__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: multiply; /* Ajuda a integrar se a foto tiver fundo branco */
+    opacity: 0.9;
+  }
+
+  /* Placeholder caso a imagem falhe */
+  .about__image-frame::before {
+    content: "Spazio Vascolare";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    opacity: 0.2;
+    z-index: -1;
+  }
+
+  .experience-card {
+    position: absolute;
+    top: -1.5rem;
+    right: -1rem;
+    padding: 1.5rem;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .experience-num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 3rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .experience-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+
+  .about__title {
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .about__subtitle {
+    display: block;
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 0.9rem;
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  .about__text {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+  }
+
+  .about__text strong {
+    color: var(--text);
+  }
+
+  .credentials {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .credential-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(212, 10, 91, 0.02);
+  }
+
+  .credential-item span {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  /* Mobile */
+  @media (max-width: 1024px) {
+    .about__grid {
+      grid-template-columns: 1fr;
+      gap: 4rem;
+    }
+    .about__visual {
+      order: 2;
+    }
+    .about__content {
+      order: 1;
+    }
+  }
+</style>

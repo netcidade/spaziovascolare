@@ -1,0 +1,387 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import FAQ from '../../components/FAQ.astro';
+import Footer from '../../components/Footer.astro';
+import { STATIC_POSTS } from '../../lib/staticData';
+
+let posts = STATIC_POSTS;
+try {
+  const { getPosts } = await import('../../lib/appwrite');
+  const live = await getPosts(30);
+  if (live.length > 0) posts = live as typeof STATIC_POSTS;
+} catch (_) {}
+
+const categories = ['Todos', ...Array.from(new Set(posts.map(p => p.category).filter(Boolean)))];
+---
+
+<Layout
+  title="Blog — Dra. Mônica Arena | Saúde Vascular"
+  description="Artigos e informações sobre saúde vascular, tratamentos, varizes, trombose e muito mais da especialista Dra. Mônica Arena."
+>
+  <Header />
+
+  <main>
+    <!-- Hero -->
+    <section class="blog-hero">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="/">Início</a>
+          <span>/</span>
+          <span>Blog</span>
+        </div>
+        <div class="section-meta">Artigos & Informações</div>
+        <h1 class="blog-hero__title">
+          Blog de<br />
+          <span class="text-gradient">Saúde Vascular</span>
+        </h1>
+        <p class="blog-hero__desc">
+          Conteúdo educativo sobre saúde vascular, dicas de prevenção,
+          tratamentos e novidades da especialidade. Escrito pela Dra. Mônica Arena.
+        </p>
+      </div>
+      <div class="hero-glow" aria-hidden="true"></div>
+    </section>
+
+    <!-- Posts -->
+    <section class="blog-section">
+      <div class="container">
+        <!-- Category filter -->
+        <div class="category-filter" role="navigation" aria-label="Filtrar por categoria">
+          {categories.map((cat) => (
+            <button
+              class={`cat-btn ${cat === 'Todos' ? 'active' : ''}`}
+              data-category={cat}
+              type="button"
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {posts.length === 0 ? (
+          <div class="empty-state glass">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+            <p>Nenhum post publicado ainda.</p>
+          </div>
+        ) : (
+          <div class="posts-grid">
+            {posts.map((post, i) => (
+              <article
+                class={`post-card ${i === 0 ? 'featured' : ''}`}
+                data-category={post.category ?? 'Geral'}
+              >
+                <a href={`/blog/${post.slug}`} class="post-card__link" aria-label={`Ler: ${post.title}`}>
+                  <div class="post-card__img-wrap">
+                    <img
+                      src={post.cover_url ?? '/img/fundo-1388026885-1024x1024.jpg'}
+                      alt={post.title}
+                      class="post-card__img"
+                      loading={i < 3 ? 'eager' : 'lazy'}
+                      width="600" height="340"
+                    />
+                    <div class="post-card__img-overlay" aria-hidden="true"></div>
+                    {post.category && (
+                      <span class="post-card__category">{post.category}</span>
+                    )}
+                  </div>
+                  <div class="post-card__body">
+                    <time class="post-card__date" datetime={post.published_at ?? ''}>
+                      {post.published_at
+                        ? new Date(post.published_at).toLocaleDateString('pt-BR', {
+                            day: '2-digit', month: 'long', year: 'numeric',
+                          })
+                        : ''}
+                    </time>
+                    <h2 class="post-card__title">{post.title}</h2>
+                    <p class="post-card__excerpt">{post.excerpt}</p>
+                    <span class="post-card__read-more">
+                      Ler artigo
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M5 12h14m-7-7 7 7-7 7"/>
+                      </svg>
+                    </span>
+                  </div>
+                </a>
+              </article>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <FAQ 
+      page="blog" 
+      title="Dúvidas do Blog" 
+      subtitle="Informações complementares para você" 
+    />
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .blog-hero {
+    padding-top: 10rem;
+    padding-bottom: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.06em;
+  }
+
+  .breadcrumb a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--accent); }
+
+  .blog-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+  }
+
+  .blog-hero__desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    max-width: 52ch;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -150px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(212,10,91,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* Blog section */
+  .blog-section { padding-bottom: var(--space-xl, 7rem); }
+
+  /* Category filter */
+  .category-filter {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .cat-btn {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.45rem 1rem;
+    border-radius: 100px;
+    border: 1px solid rgba(212, 10, 91, 0.15);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .cat-btn:hover, .cat-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* Grid */
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .post-card.featured {
+    grid-column: span 3;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+  }
+
+  /* Card */
+  .post-card {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(212, 10, 91, 0.08);
+    background: rgba(255, 255, 255, 0.6);
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s, border-color 0.3s;
+  }
+
+  .post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 48px rgba(212, 10, 91, 0.09);
+    border-color: rgba(212, 10, 91, 0.2);
+  }
+
+  .post-card__link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .featured .post-card__link {
+    display: contents;
+  }
+
+  /* Image */
+  .post-card__img-wrap {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+  }
+
+  .featured .post-card__img-wrap {
+    aspect-ratio: auto;
+    min-height: 360px;
+  }
+
+  .post-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .post-card:hover .post-card__img { transform: scale(1.04); }
+
+  .post-card__img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(65, 2, 19, 0.3));
+    pointer-events: none;
+  }
+
+  .post-card__category {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #fff;
+    padding: 0.25rem 0.65rem;
+    border-radius: 100px;
+  }
+
+  /* Body */
+  .post-card__body {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+  }
+
+  .featured .post-card__body {
+    padding: 2.5rem;
+    justify-content: center;
+  }
+
+  .post-card__date {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .post-card__title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 0.25rem;
+  }
+
+  .featured .post-card__title { font-size: 1.8rem; }
+
+  .post-card__excerpt {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .post-card__read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-top: 0.5rem;
+    transition: gap 0.2s;
+  }
+
+  .post-card:hover .post-card__read-more { gap: 0.6rem; }
+
+  /* Empty state */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 5rem 2rem;
+    text-align: center;
+    border-radius: 20px;
+    color: var(--text-muted);
+    border: 1px dashed rgba(212,10,91,0.15);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .posts-grid { grid-template-columns: repeat(2, 1fr); }
+    .post-card.featured { grid-column: span 2; }
+    .featured .post-card__link { display: flex; flex-direction: column; }
+    .featured .post-card__img-wrap { min-height: 240px; }
+  }
+
+  @media (max-width: 640px) {
+    .posts-grid { grid-template-columns: 1fr; }
+    .post-card.featured { grid-column: span 1; }
+  }
+</style>
+
+<script>
+  // Category filter
+  const btns = document.querySelectorAll<HTMLButtonElement>('.cat-btn');
+  const cards = document.querySelectorAll<HTMLElement>('.post-card');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.category;
+      cards.forEach(card => {
+        if (cat === 'Todos' || card.dataset.category === cat) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

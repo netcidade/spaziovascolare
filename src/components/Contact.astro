@@ -1,0 +1,241 @@
+---
+import { getSiteSettings } from "../lib/appwrite";
+
+// Defaults (fallback caso o documento ainda não exista ou demore)
+const defaults = {
+  whatsapp:      '5543991502223',
+  phone:         '(43) 3377-1900',
+  email:         'contato@spaziovascolare.com.br',
+  address:       'Av. Rio de Janeiro, 1500 — 8º Andar Sala 803',
+  city:          'Centro, Londrina — PR',
+  cep:           '86010-150',
+  maps_embed:    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3659.213!2d-51.1637!3d-23.3246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd48f113f2795198!2sDra.%20Monica%20Filgueiras%20Arena!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr',
+};
+
+const doc = await getSiteSettings();
+let cfg = { ...defaults };
+
+if (doc) {
+  Object.keys(defaults).forEach(k => { if (doc[k]) cfg[k] = doc[k]; });
+}
+
+const waLink      = `https://wa.me/${cfg.whatsapp.replace(/\D/g, '')}`;
+const phoneLink   = `tel:+${cfg.phone.replace(/\D/g, '')}`;
+const displayAddr = cfg.city ? `${cfg.address} — ${cfg.city}` : cfg.address;
+---
+
+<section class="contact" id="contato">
+  <div class="container glass section-card">
+    <div class="section-meta">Agendamento</div>
+    <h2 class="contact__title">
+      Inicie seu Tratamento <span class="text-gradient">Especializado</span>
+    </h2>
+    <div class="contact__grid">
+      <div class="contact__info">
+        <p class="contact__desc">
+          A <strong><span class="text-gradient">Dra. Mônica</span></strong> realiza
+          avaliação completa com ecografia vascular na mesma consulta. Nossa equipe
+          está pronta para oferecer um atendimento exclusivo e personalizado. Escolha
+          o canal de sua preferência:
+        </p>
+
+        <div class="contact-list">
+          <a href={waLink} class="contact-card glass" target="_blank" rel="noopener noreferrer">
+            <div class="contact-card__icon whatsapp">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-14h.9a8.38 8.38 0 0 1 3.8.9L21 3z"
+                ></path>
+              </svg>
+            </div>
+            <div class="contact-card__info">
+              <strong>WhatsApp</strong>
+              <span>{cfg.whatsapp}</span>
+            </div>
+            <div class="contact-card__arrow">→</div>
+          </a>
+
+          <a href={phoneLink} class="contact-card glass">
+            <div class="contact-card__icon">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                ></path>
+              </svg>
+            </div>
+            <div class="contact-card__info">
+              <strong>Telefone Fixo</strong>
+              <span>{cfg.phone}</span>
+            </div>
+            <div class="contact-card__arrow">→</div>
+          </a>
+
+          <div class="contact-card glass">
+            <div class="contact-card__icon">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <div class="contact-card__info">
+              <strong>Localização</strong>
+              <span>{displayAddr}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact__map">
+        <div class="map-container glass">
+          <iframe
+            src={cfg.maps_embed}
+            width="100%"
+            height="100%"
+            style="border:0; filter: grayscale(0.2) contrast(1.1);"
+            allowfullscreen=""
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 2rem; /* Espaço antes do footer */
+  }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .contact__title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+
+  .contact__desc {
+    margin-bottom: 3.5rem;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+  }
+
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .contact-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--border);
+    transition: all var(--dur) var(--ease);
+  }
+
+  .contact-card:hover {
+    background: #fff;
+    border-color: var(--accent);
+    transform: translateX(10px);
+    box-shadow: 0 10px 30px rgba(212, 10, 91, 0.05);
+  }
+
+  .contact-card__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(212, 10, 91, 0.04);
+  }
+
+  .whatsapp {
+    color: #25d366;
+    background: rgba(37, 211, 102, 0.05);
+  }
+
+  .contact-card__info strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+
+  .contact-card__info span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .contact-card__arrow {
+    margin-left: auto;
+    color: var(--accent);
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease);
+  }
+
+  .contact-card:hover .contact-card__arrow {
+    opacity: 1;
+  }
+
+  /* Map */
+  .contact__map {
+    height: 600px;
+  }
+
+  .map-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding: 0.75rem;
+    background: #fff;
+    box-shadow: 0 20px 50px rgba(212, 10, 91, 0.05);
+  }
+
+  .map-container iframe {
+    border-radius: 15px;
+  }
+
+  /* Mobile */
+  @media (max-width: 1024px) {
+    .contact__grid {
+      grid-template-columns: 1fr;
+    }
+    .contact__map {
+      height: 400px;
+    }
+  }
+</style>

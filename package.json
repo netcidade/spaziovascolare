@@ -1,0 +1,17 @@
+{
+  "name": "spazio-vascolare",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Site oficial Dra. Mônica Arena - Cirurgiã Vascular Londrina",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^13.1.10",
+    "astro": "^6.1.8",
+    "appwrite": "^17.0.2"
+  }
+}

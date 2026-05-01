@@ -1,0 +1,396 @@
+---
+// Redireciona para /admin/dashboard se já logado (verificado no client)
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin — Spazio Vascolare</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Urbanist:wght@700;800;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :root {
+        --bg: #fff8f9;
+        --accent: #d40a5b;
+        --accent-deep: #a50847;
+        --text: #410213;
+        --text-muted: #8a3048;
+        --border: rgba(212,10,91,0.12);
+        --font-display: 'Urbanist', sans-serif;
+        --font-body: 'Plus Jakarta Sans', sans-serif;
+        --font-mono: 'Space Grotesk', monospace;
+      }
+
+      html, body {
+        min-height: 100vh;
+        background: var(--bg);
+        font-family: var(--font-body);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Background glow */
+      body::before {
+        content: '';
+        position: fixed;
+        top: -200px; right: -200px;
+        width: 700px; height: 700px;
+        background: radial-gradient(circle, rgba(212,10,91,0.08) 0%, transparent 65%);
+        pointer-events: none;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        bottom: -150px; left: -150px;
+        width: 500px; height: 500px;
+        background: radial-gradient(circle, rgba(212,10,91,0.05) 0%, transparent 65%);
+        pointer-events: none;
+      }
+
+      /* Card */
+      .login-card {
+        width: 100%;
+        max-width: 420px;
+        background: rgba(255,255,255,0.75);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255,255,255,0.9);
+        border-radius: 28px;
+        padding: 3rem;
+        box-shadow: 0 20px 60px rgba(212,10,91,0.1);
+        position: relative;
+        z-index: 1;
+        animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      @keyframes fadeUp {
+        to { opacity: 1; transform: none; }
+      }
+
+      .login-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .login-logo img {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        object-fit: cover;
+      }
+
+      .login-logo-text {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+      }
+
+      .login-logo-name {
+        font-family: var(--font-display);
+        font-size: 1rem;
+        font-weight: 900;
+        color: var(--text);
+        letter-spacing: 0.04em;
+        line-height: 1;
+      }
+
+      .login-logo-sub {
+        font-family: var(--font-mono);
+        font-size: 0.62rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      h1 {
+        font-family: var(--font-display);
+        font-size: 1.9rem;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 0.4rem;
+        line-height: 1.1;
+      }
+
+      .login-subtitle {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-bottom: 2.5rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        margin-bottom: 1.25rem;
+      }
+
+      label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+      }
+
+      input {
+        width: 100%;
+        padding: 0.85rem 1.1rem;
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        color: var(--text);
+        background: rgba(255,255,255,0.8);
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+
+      input:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(212,10,91,0.1);
+      }
+
+      input::placeholder { color: rgba(65,2,19,0.3); }
+
+      .password-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .toggle-password {
+        position: absolute;
+        right: 1rem;
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.25rem;
+        transition: color 0.2s;
+      }
+
+      .toggle-password:hover {
+        color: var(--accent);
+      }
+
+      .btn-submit {
+        width: 100%;
+        padding: 0.9rem;
+        background: var(--accent);
+        color: #fff;
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        font-weight: 700;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        margin-top: 0.5rem;
+        transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .btn-submit:hover:not(:disabled) {
+        background: var(--accent-deep);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 24px rgba(212,10,91,0.3);
+      }
+
+      .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+      .error-msg {
+        display: none;
+        font-size: 0.82rem;
+        color: #c53030;
+        background: rgba(197,48,48,0.07);
+        border: 1px solid rgba(197,48,48,0.15);
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+        margin-top: 1rem;
+        text-align: center;
+      }
+
+      .error-msg.visible { display: block; }
+
+      .login-footer {
+        margin-top: 2rem;
+        text-align: center;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+      }
+
+      .spinner {
+        width: 18px; height: 18px;
+        border: 2px solid rgba(255,255,255,0.4);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        display: none;
+      }
+
+      @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+  </head>
+
+  <body>
+    <div class="login-card" role="main">
+      <div class="login-logo">
+        <img src="/img/logo-i-200px.jpg" alt="Spazio Vascolare" />
+        <div class="login-logo-text">
+          <span class="login-logo-name">SPAZIO VASCOLARE</span>
+          <span class="login-logo-sub">Painel Administrativo</span>
+        </div>
+      </div>
+
+      <h1>Entrar</h1>
+      <p class="login-subtitle">Acesse o painel de gerenciamento do site.</p>
+
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="seu@email.com"
+            autocomplete="email"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <div class="password-wrapper">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              required
+            />
+            <button type="button" class="toggle-password" id="togglePassword" title="Mostrar/Ocultar senha">
+              <svg id="eyeOpen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg id="eyeClosed" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <span id="btnText">Entrar no painel</span>
+          <span class="spinner" id="spinner"></span>
+        </button>
+
+        <p class="error-msg" id="errorMsg" role="alert"></p>
+      </form>
+
+      <p class="login-footer">Spazio Vascolare · Área restrita</p>
+    </div>
+
+    <script>
+      const ENDPOINT   = 'https://appwrite.netcidade.com/v1';
+      const PROJECT_ID = 'spazio-vascolare';
+
+      // Verifica sessão existente
+      const fallbackCookie = localStorage.getItem('cookieFallback');
+      const checkHeaders = { 'X-Appwrite-Project': PROJECT_ID };
+      if (fallbackCookie) checkHeaders['x-fallback-cookies'] = fallbackCookie;
+
+      fetch(`${ENDPOINT}/account`, {
+        headers: checkHeaders,
+        credentials: 'include',
+      }).then(r => {
+        if (r.ok) window.location.replace('/admin/dashboard');
+      }).catch(() => {});
+
+      const form      = document.getElementById('loginForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText   = document.getElementById('btnText');
+      const spinner   = document.getElementById('spinner');
+      const errorMsg  = document.getElementById('errorMsg');
+      const toggleBtn = document.getElementById('togglePassword');
+      const passwordInput = document.getElementById('password');
+      const eyeOpen = document.getElementById('eyeOpen');
+      const eyeClosed = document.getElementById('eyeClosed');
+
+      toggleBtn.addEventListener('click', () => {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        eyeOpen.style.display = isPassword ? 'block' : 'none';
+        eyeClosed.style.display = isPassword ? 'none' : 'block';
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email    = form.email.value.trim();
+        const password = form.password.value;
+        if (!email || !password) return;
+
+        submitBtn.disabled = true;
+        btnText.textContent = 'Entrando...';
+        spinner.style.display = 'block';
+        errorMsg.classList.remove('visible');
+
+        try {
+          const res = await fetch(`${ENDPOINT}/account/sessions`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Appwrite-Project': PROJECT_ID,
+            },
+            credentials: 'include',
+            body: JSON.stringify({ email, password }),
+          });
+
+          if (res.ok) {
+            const fallback = res.headers.get('x-fallback-cookies');
+            if (fallback) localStorage.setItem('cookieFallback', fallback);
+            window.location.replace('/admin/dashboard');
+          } else {
+            const err = await res.json();
+            throw new Error(err.message || 'Erro ao autenticar');
+          }
+        } catch (err) {
+          errorMsg.textContent = err.message || 'E-mail ou senha incorretos. Tente novamente.';
+          errorMsg.classList.add('visible');
+          submitBtn.disabled = false;
+          btnText.textContent = 'Entrar no painel';
+          spinner.style.display = 'none';
+        }
+      });
+    </script>
+  </body>
+</html>
