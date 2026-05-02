@@ -15,43 +15,41 @@ import Footer from "../components/Footer.astro";
   <main>
     <Hero />
     <About />
-    <section class="cta-especialidades">
-      <div class="container">
-        <div class="cta-card glass section-card">
-          <h2 class="contact__title">
-            Atendimento Especializado em <span class="text-gradient"
-              >Tratamentos e Cirurgias</span
+    <section class="cta-especialidades" id="especialidades">
+      <div class="container glass section-card cta-content">
+        <h2 class="contact__title">
+          Atendimento Especializado em <span class="text-gradient"
+            >Tratamentos e Cirurgias</span
+          >
+        </h2>
+        <p>
+          Oferecemos o que há de mais moderno na medicina vascular. Escolha
+          abaixo a área de seu interesse para saber mais detalhes sobre os
+          procedimentos que realizamos.
+        </p>
+        <div class="cta-actions">
+          <a href="/tratamentos" class="btn-action primary">
+            Conhecer Tratamentos
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"></path></svg
             >
-          </h2>
-          <p>
-            Oferecemos o que há de mais moderno na medicina vascular. Escolha
-            abaixo a área de seu interesse para saber mais detalhes sobre os
-            procedimentos que realizamos.
-          </p>
-          <div class="cta-actions">
-            <a href="/tratamentos" class="btn-action primary">
-              Conhecer Tratamentos
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"></path></svg
-              >
-            </a>
-            <a href="/cirurgias" class="btn-action secondary">
-              Ver Cirurgias
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"></path></svg
-              >
-            </a>
-          </div>
+          </a>
+          <a href="/cirurgias" class="btn-action secondary">
+            Ver Cirurgias
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"></path></svg
+            >
+          </a>
         </div>
       </div>
     </section>
@@ -98,31 +96,24 @@ import Footer from "../components/Footer.astro";
 
   /* CTA Especialidades */
   .cta-especialidades {
-    padding: 2rem 0;
+    padding: 0;
   }
-  .cta-card {
+  .cta-content {
     text-align: center;
-    padding: 4rem 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
-    border-radius: 32px;
   }
-  .cta-card h2 {
+  .cta-content h2 {
     font-size: clamp(2rem, 4vw, 3rem);
     font-family: var(--font-display);
     line-height: 1.1;
   }
-  .cta-card p {
+  .cta-content p {
     color: var(--text-muted);
     font-size: 1.1rem;
     max-width: 600px;
-  }
-  @media (max-width: 1024px) {
-    .cta-card {
-      padding: 2.5rem 1rem;
-    }
   }
   .cta-actions {
     display: flex;

@@ -2,12 +2,13 @@
 
 ## Milestone 1: Version Control & Backend Verification
 
-### Phase 1: Version Control (Git Push)
+### Phase 1: Version Control (Git Push) [✓]
 - **Goal:** Safely connect and push the existing codebase to GitHub.
 - **Why:** Secures all work completed so far and allows tracking of changes before conducting any deep modifications to backend integrations.
 - **Requirements:**
-  - Remote repository connected (`https://github.com/netcidade/spaziovascolare.git`).
-  - Master/main branch securely pushed.
+  - ✓ Remote repository connected (`https://github.com/netcidade/spaziovascolare.git`).
+  - ✓ Master/main branch securely pushed.
+
 
 ### Phase 2: Appwrite Integration Verification
 - **Goal:** Ensure all backend interactions via Appwrite are solid, secure, and fully operational.
