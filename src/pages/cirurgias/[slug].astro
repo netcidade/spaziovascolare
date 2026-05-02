@@ -37,7 +37,7 @@ const description = surgery.description.substring(0, 160);
             <h1 class="hero-title">
               <span class="text-gradient">{surgery.title}</span>
             </h1>
-            <p class="hero-subtitle">Referência em cirurgia vascular com foco em segurança, precisão e recuperação humanizada.</p>
+            {surgery.subtitle && <div class="hero-subtitle" set:html={surgery.subtitle} />}
           </div>
           
           <div class="hero-image glass">

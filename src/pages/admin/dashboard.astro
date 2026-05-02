@@ -9,15 +9,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard — Spazio Vascolare Admin</title>
     <meta name="robots" content="noindex, nofollow" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/jpeg" href="/img/logo-i-200px.jpg" />
     <!-- Quill WYSIWYG -->
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.quilljs.com/1.3.6/quill.js" is:inline></script>
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Urbanist:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Urbanist:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
       :root {
@@ -25,29 +31,34 @@
         --bg: #fff8f9;
         --surface: #ffffff;
         --surface-glass: rgba(255, 255, 255, 0.7);
-        
+
         --accent: #d40a5b;
         --accent-glow: rgba(212, 10, 91, 0.15);
         --accent-deep: #810a37;
-        
+
         --text: #410213;
         --text-muted: #d40a5b;
         --border: rgba(212, 10, 91, 0.12);
         --border-bright: rgba(212, 10, 91, 0.25);
-        
+
         --font-display: "Urbanist", sans-serif;
         --font-mono: "Space Grotesk", monospace;
         --font-body: "Urbanist", sans-serif;
-        
+
         --radius: 24px;
         --ease: cubic-bezier(0.16, 1, 0.3, 1);
         --dur: 0.4s;
         --sidebar-w: 280px;
       }
 
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-      
-      html, body { 
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
         min-height: 100vh;
         background-color: var(--bg);
         color: var(--text);
@@ -57,7 +68,7 @@
       }
 
       body {
-        background: 
+        background:
           linear-gradient(rgba(255, 248, 249, 0.5), rgba(255, 248, 249, 0.5)),
           url("/img/fundo-1388026885-1024x1024.jpg");
         background-attachment: fixed;
@@ -67,22 +78,24 @@
 
       /* Layout */
       .app {
-        display: grid;
-        grid-template-columns: var(--sidebar-w) 1fr;
+        display: flex;
         min-height: 100vh;
+        background: var(--bg);
       }
-
+      
       /* Sidebar */
       .sidebar {
+        width: 320px;
         background: var(--surface-glass);
-        backdrop-filter: blur(12px);
+        backdrop-filter: blur(20px);
         border-right: 1px solid var(--border);
         display: flex;
         flex-direction: column;
+        height: 100vh;
         position: sticky;
         top: 0;
-        height: 100vh;
-        z-index: 20;
+        z-index: 9999 !important; /* Força ficar na frente no mobile */
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       .sidebar__logo {
@@ -93,14 +106,47 @@
         border-bottom: 1px solid var(--border);
       }
 
-      .sidebar__logo img { width: 42px; height: 42px; border-radius: 12px; object-fit: cover; border: 1px solid var(--accent); }
-      .sidebar__logo-text { line-height: 1.1; }
-      .sidebar__logo-name { font-family: var(--font-display); font-weight: 900; font-size: 1rem; letter-spacing: 0.05em; }
-      .sidebar__logo-sub { font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); text-transform: uppercase; font-weight: 700; }
+      .sidebar__logo img {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 1px solid var(--accent);
+      }
+      .sidebar__logo-text {
+        line-height: 1.1;
+      }
+      .sidebar__logo-name {
+        font-family: var(--font-display);
+        font-weight: 900;
+        font-size: 1rem;
+        letter-spacing: 0.05em;
+      }
+      .sidebar__logo-sub {
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+        color: var(--accent);
+        text-transform: uppercase;
+        font-weight: 700;
+      }
 
-      .sidebar__nav { padding: 1.5rem 1rem; flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
-      .nav-label { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); padding: 1rem 1rem 0.5rem; opacity: 0.6; letter-spacing: 0.1em; }
-      
+      .sidebar__nav {
+        padding: 1.5rem 1rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .nav-label {
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        padding: 1rem 1rem 0.5rem;
+        opacity: 0.6;
+        letter-spacing: 0.1em;
+      }
+
       .nav-link {
         display: flex;
         align-items: center;
@@ -118,11 +164,105 @@
         text-align: left;
       }
 
-      .nav-link:hover { background: var(--accent-glow); color: var(--accent); }
-      .nav-link.active { background: var(--surface); border-color: var(--accent); color: var(--accent); box-shadow: 0 4px 15px var(--accent-glow); }
+      .nav-link:hover {
+        background: var(--accent-glow);
+        color: var(--accent);
+      }
+      .nav-link.active {
+        background: var(--surface);
+        border-color: var(--accent);
+        color: var(--accent);
+        box-shadow: 0 4px 15px var(--accent-glow);
+      }
 
       /* Main Content */
-      .main { display: flex; flex-direction: column; }
+      .btn-html-toggle {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.7rem;
+        cursor: pointer;
+        margin-bottom: 5px;
+        font-family: var(--font-mono);
+        color: var(--text-muted);
+        transition: all 0.2s;
+        display: block;
+      }
+      .btn-html-toggle:hover {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+      }
+      .html-editor-area {
+        width: 100%;
+        height: 200px;
+        background: #1e1e1e;
+        color: #d4d4d4;
+        font-family: 'Consolas', monospace;
+        font-size: 0.85rem;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #333;
+        resize: vertical;
+        margin-top: 5px;
+      }
+      .hidden { display: none !important; }
+      
+      /* Mobile UI */
+      .menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--accent);
+        cursor: pointer;
+        padding: 0.5rem;
+      }
+      .sidebar-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 90;
+        display: none;
+        backdrop-filter: blur(4px);
+      }
+      
+      @media (max-width: 1024px) {
+        .sidebar {
+          position: fixed;
+          left: 0;
+          transform: translateX(-100%);
+        }
+        .sidebar.active {
+          transform: translateX(0);
+        }
+        .sidebar-overlay.active {
+          display: block;
+        }
+        .menu-toggle {
+          display: block;
+        }
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 640px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+        .topbar {
+          padding: 1rem 1.5rem;
+        }
+        .content {
+          padding: 1.5rem;
+        }
+      }
+
+      .main {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
       .topbar {
         padding: 1.5rem 2.5rem;
         background: var(--surface-glass);
@@ -135,16 +275,42 @@
         top: 0;
         z-index: 10;
       }
-      .topbar h1 { font-size: 1.25rem; font-weight: 800; font-family: var(--font-display); }
+      .topbar h1 {
+        font-size: 1.25rem;
+        font-weight: 800;
+        font-family: var(--font-display);
+      }
 
-      .content { padding: 2.5rem; flex: 1; }
-      
-      .tab-section { display: none; animation: fadeIn 0.4s var(--ease); }
-      .tab-section.active { display: block; }
-      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+      .content {
+        padding: 2.5rem;
+        flex: 1;
+      }
+
+      .tab-section {
+        display: none;
+        animation: fadeIn 0.4s var(--ease);
+      }
+      .tab-section.active {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
       /* Stats */
-      .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
       .stat-card {
         background: var(--surface-glass);
         backdrop-filter: blur(10px);
@@ -155,13 +321,34 @@
         flex-direction: column;
         gap: 0.5rem;
         transition: transform 0.3s;
+        cursor: pointer;
       }
-      .stat-card:hover { transform: translateY(-5px); border-color: var(--accent); }
-      .stat-card__val { font-size: 2.5rem; font-weight: 900; color: var(--accent); line-height: 1; font-family: var(--font-display); }
-      .stat-card__label { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
+      .stat-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent);
+      }
+      .stat-card__val {
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: var(--accent);
+        line-height: 1;
+        font-family: var(--font-display);
+      }
+      .stat-card__label {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        font-weight: 700;
+      }
 
       /* Section Header & Buttons */
-      .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
       .btn-primary {
         background: var(--accent);
         color: white;
@@ -174,69 +361,264 @@
         gap: 0.5rem;
         transition: all 0.3s;
         box-shadow: 0 4px 15px var(--accent-glow);
+        cursor: pointer;
       }
-      .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px var(--accent-glow); background: var(--accent-deep); }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px var(--accent-glow);
+        background: var(--accent-deep);
+      }
 
       /* Tables */
-      /* Tables (Global selectors to work with JS injection) */
-      :global(.glass-card) { background: var(--surface-glass); backdrop-filter: blur(20px); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
-      :global(table) { width: 100%; border-collapse: collapse; }
-      :global(th), :global(td) { padding: 1.25rem 1.5rem; text-align: left; border-bottom: 1px solid var(--border); }
-      :global(th) { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; background: rgba(212, 10, 91, 0.03); }
-      :global(th:first-child), :global(td:first-child) { padding-left: 2.5rem !important; }
-      :global(th:last-child), :global(td:last-child) { padding-right: 2.5rem !important; }
-      :global(tr:last-child td) { border-bottom: none; }
-      :global(tr:hover td) { background: rgba(212, 10, 91, 0.02); }
+      .glass-card {
+        background: var(--surface-glass);
+        backdrop-filter: blur(20px);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        overflow: hidden;
+        padding: 15px; /* Respiro entre a borda do card e a tabela */
+      }
+      table {
+        width: 100%;
+        border-collapse: separate; /* Permite espaçamento entre linhas se desejar */
+        border-spacing: 8px 8px; /* Espaço vertical entre as linhas */
+      }
+      th,
+      td {
+        padding: 1.25rem 1.5rem;
+        text-align: left;
+        background: var(
+          --surface
+        ); /* Fundo para as células para destacar o espaçamento */
+      }
+      th {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-weight: 700;
+        background: rgba(212, 10, 91, 0.05);
+      }
+      /* Arredondar cantos das linhas */
+      tr td:first-child {
+        border-radius: 12px 0 0 12px;
+      }
+      tr td:last-child {
+        border-radius: 0 12px 12px 0;
+      }
 
-      .badge { padding: 0.3rem 0.8rem; border-radius: 100px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
-      .badge--ok { background: rgba(16, 185, 129, 0.1); color: #10b981; }
-      .badge--wait { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+      th:first-child,
+      td:first-child {
+        padding-left: 2.5rem !important;
+      }
+      th:last-child,
+      td:last-child {
+        padding-right: 2.5rem !important;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      tr:hover td {
+        background: rgba(212, 10, 91, 0.02);
+      }
 
-      .row-actions { display: flex; gap: 0.5rem; }
-      .btn-icon { width: 36px; height: 36px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text); display: flex; align-items: center; justify-content: center; transition: 0.2s; cursor: pointer; }
-      .btn-icon:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+      .badge {
+        padding: 0.3rem 0.8rem;
+        border-radius: 100px;
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+      .badge--ok {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+      }
+      .badge--wait {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+      }
+
+      .row-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .btn-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+        cursor: pointer;
+      }
+      .btn-icon:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: var(--accent-glow);
+      }
 
       /* Modals */
-      .modal-overlay { position: fixed; inset: 0; background: rgba(65, 2, 19, 0.4); backdrop-filter: blur(12px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 2rem; }
-      .modal-overlay.open { display: flex; }
-      .modal { background: var(--surface); width: 100%; max-width: 700px; border-radius: 32px; border: 1px solid var(--accent); padding: 2.5rem; box-shadow: 0 20px 50px rgba(0,0,0,0.1); position: relative; max-height: 90vh; overflow-y: auto; }
-      .modal h2 { margin-bottom: 1.5rem; font-size: 1.5rem; }
-      .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; }
-
-      .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-      .field { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.25rem; }
-      .field.full { grid-column: span 2; }
-      label { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
-      input, textarea, select { 
-        padding: 1rem; border: 1.5px solid var(--border); border-radius: 14px; background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 0.95rem; outline: none; transition: 0.2s; 
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(65, 2, 19, 0.4);
+        backdrop-filter: blur(12px);
+        z-index: 100;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
       }
-      input:focus, textarea:focus, .ql-container:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-glow); }
-      textarea { resize: vertical; min-height: 120px; }
-      
-      /* Quill overrides */
-      .ql-toolbar.ql-snow { border-color: var(--border); border-radius: 14px 14px 0 0; background: var(--surface); }
-      .ql-container.ql-snow { border-color: var(--border); border-radius: 0 0 14px 14px; min-height: 200px; font-family: var(--font-body); font-size: 1rem; }
-      .ql-editor { min-height: 200px; }
-      .ql-editor.ql-blank::before { color: var(--text-muted); font-style: normal; }
+      .modal-overlay.open {
+        display: flex;
+      }
+      .modal {
+        background: var(--surface);
+        width: 100%;
+        max-width: 700px;
+        border-radius: 32px;
+        border: 1px solid var(--accent);
+        padding: 2.5rem;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        position: relative;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .modal h2 {
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+      }
+      .modal-close {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--text-muted);
+        cursor: pointer;
+      }
 
-      .modal-footer { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
-      .btn-sec { background: var(--bg); border: 1px solid var(--border); padding: 0.75rem 1.5rem; border-radius: 100px; font-weight: 600; cursor: pointer; }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1.25rem;
+      }
+      .field.full {
+        grid-column: span 2;
+      }
+      label {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        font-weight: 700;
+      }
+      input,
+      textarea,
+      select {
+        padding: 1rem;
+        border: 1.5px solid var(--border);
+        border-radius: 14px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        outline: none;
+        transition: 0.2s;
+      }
+      input:focus,
+      textarea:focus,
+      .ql-container:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 4px var(--accent-glow);
+      }
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
 
       /* Toasts */
-      .toast-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 1000; display: flex; flex-direction: column; gap: 0.75rem; }
-      .toast { background: var(--surface); border: 1px solid var(--accent); padding: 1rem 1.5rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(212, 10, 91, 0.15); font-weight: 700; animation: slideIn 0.3s var(--ease); }
-      @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+      .toast-container {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .toast {
+        background: var(--surface);
+        border: 1px solid var(--accent);
+        padding: 1rem 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(212, 10, 91, 0.15);
+        font-weight: 700;
+        animation: slideIn 0.3s var(--ease);
+      }
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
 
       /* Loading */
-      #loader { position: fixed; inset: 0; background: var(--bg); z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; transition: opacity 0.5s; }
-      #loader.hidden { opacity: 0; pointer-events: none; }
-      .spinner { width: 40px; height: 40px; border: 4px solid var(--accent-glow); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s infinite linear; }
-      @keyframes spin { to { transform: rotate(360deg); } }
+      #loader {
+        position: fixed;
+        inset: 0;
+        background: var(--bg);
+        z-index: 2000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        transition: opacity 0.5s;
+      }
+      #loader.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid var(--accent-glow);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 1s infinite linear;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
 
   <body>
-    <div id="loader"><div class="spinner"></div><div style="font-family:var(--font-mono);font-size:0.8rem;letter-spacing:0.2em;color:var(--accent)">AUTENTICANDO...</div></div>
+    <div id="loader">
+      <div class="spinner"></div><div
+        style="font-family:var(--font-mono);font-size:0.8rem;letter-spacing:0.2em;color:var(--accent)"
+      >
+        AUTENTICANDO...
+      </div>
+    </div>
 
     <div class="app">
       <aside class="sidebar">
@@ -247,11 +629,18 @@
             <div class="sidebar__logo-sub">Gerenciamento</div>
           </div>
         </div>
-        
+
+        <div class="sidebar__agendar" style="padding: 0 1.25rem 1.5rem">
+          <a href="https://wa.me/5543991502223" target="_blank" class="btn-primary" style="display:flex !important; align-items:center; justify-content:center; gap:0.5rem; text-decoration:none; width: 100%;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            Agendar Paciente
+          </a>
+        </div>
+
         <nav class="sidebar__nav">
           <div class="nav-label">Overview</div>
           <button class="nav-link active" data-tab="dash">Dashboard</button>
-          
+
           <div class="nav-label">Conteúdo do Site</div>
           <button class="nav-link" data-tab="treatments">Tratamentos</button>
           <button class="nav-link" data-tab="surgeries">Cirurgias</button>
@@ -261,367 +650,345 @@
           <div class="nav-label">Configurações</div>
           <button class="nav-link" data-tab="settings">Info Contato</button>
         </nav>
-        
+
         <div style="padding:1.5rem; border-top:1px solid var(--border)">
-          <button class="nav-link" id="logoutBtn" style="color:var(--red)">Sair do Painel</button>
+          <button class="nav-link" id="logoutBtn">Sair do Painel</button>
         </div>
       </aside>
 
       <main class="main">
         <header class="topbar">
-          <h1 id="tabTitle">Dashboard</h1>
+          <div style="display:flex; align-items:center; gap:1rem">
+            <button class="menu-toggle" id="menuBtn">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+            <h1 id="tabTitle">Dashboard</h1>
+          </div>
           <div style="display:flex;align-items:center;gap:1rem">
-            <span id="userEmail" style="font-weight:700;font-size:0.85rem;color:var(--text-muted)"></span>
-            <div style="width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 10px #10b981"></div>
+            <span
+              id="userEmail"
+              style="font-weight:700;font-size:0.85rem;color:var(--text-muted)"
+            ></span>
+            <div
+              style="width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 10px #10b981"
+            >
+            </div>
           </div>
         </header>
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
         <div class="content">
           <!-- DASHBOARD OVERVIEW -->
           <section id="tab-dash" class="tab-section active">
             <div class="stats-grid">
-              <div class="stat-card">
+              <div class="stat-card" data-goto="treatments">
                 <div class="stat-card__val" id="count-t">0</div>
                 <div class="stat-card__label">Tratamentos</div>
               </div>
-              <div class="stat-card">
+              <div class="stat-card" data-goto="surgeries">
                 <div class="stat-card__val" id="count-s">0</div>
                 <div class="stat-card__label">Cirurgias</div>
               </div>
-              <div class="stat-card">
+              <div class="stat-card" data-goto="blog">
                 <div class="stat-card__val" id="count-p">0</div>
                 <div class="stat-card__label">Blog Posts</div>
               </div>
-              <div class="stat-card">
+              <div class="stat-card" data-goto="quiz">
                 <div class="stat-card__val" id="count-q">0</div>
                 <div class="stat-card__label">Perguntas Quiz</div>
               </div>
             </div>
-            
+
             <div class="glass-card" style="padding:3rem;text-align:center">
-              <h2 style="font-family:var(--font-display);font-size:2rem;margin-bottom:1rem">Bem-vindo ao Novo Painel</h2>
-              <p style="max-width:600px;margin:0 auto">Utilize o menu lateral para gerenciar os conteúdos do site Spazio Vascolare. Todas as alterações são sincronizadas em tempo real com o backend.</p>
-              <br><br>
-              <button class="btn-primary" onclick="window.migrateCategories()" style="background:#10b981">Executar Migração (Mover Tratamentos e Cirurgias)</button>
+              <h2
+                style="font-family:var(--font-display);font-size:2rem;margin-bottom:1rem"
+              >
+                Bem-vindo ao Novo Painel
+              </h2>
+              <p style="max-width:600px;margin:0 auto">
+                Utilize o menu lateral para gerenciar os conteúdos do site
+                Spazio Vascolare. Todas as alterações são sincronizadas em tempo
+                real com o backend.
+              </p>
+              <br /><br />
+              <button
+                class="btn-primary"
+                onclick="window.migrateCategories()"
+                style="background:#10b981; margin: 0 auto"
+                >Executar Migração (Blog p/ Abas)</button
+              >
             </div>
           </section>
 
-          <!-- TREATMENTS TAB -->
+          <!-- TABLES SECTIONS (Same as before) -->
           <section id="tab-treatments" class="tab-section">
             <div class="section-header">
-              <h2>Gerenciar Tratamentos</h2>
-              <button class="btn-primary" onclick="openModal('modalT')">Novo Tratamento</button>
+              <h2>Gerenciar Tratamentos</h2><button
+                class="btn-primary"
+                onclick="openT()">Novo Tratamento</button
+              >
             </div>
             <div class="glass-card">
               <table>
-                <thead>
-                  <tr>
-                    <th>Ordem</th>
-                    <th>Título</th>
-                    <th>Subtítulo</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="tableT"></tbody>
+                <thead
+                  ><tr
+                    ><th>Ordem</th><th>Título</th><th>Subtítulo</th><th
+                      >Status</th
+                    ><th>Ações</th></tr
+                  ></thead
+                ><tbody id="tableT"></tbody>
               </table>
             </div>
           </section>
 
-          <!-- SURGERIES TAB -->
           <section id="tab-surgeries" class="tab-section">
             <div class="section-header">
-              <h2>Gerenciar Cirurgias</h2>
-              <button class="btn-primary" onclick="openModal('modalS')">Nova Cirurgia</button>
+              <h2>Gerenciar Cirurgias</h2><button
+                class="btn-primary"
+                onclick="openS()">Nova Cirurgia</button
+              >
             </div>
             <div class="glass-card">
               <table>
-                <thead>
-                  <tr>
-                    <th>Ordem</th>
-                    <th>Título</th>
-                    <th>Duração</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="tableS"></tbody>
+                <thead
+                  ><tr
+                    ><th>Ordem</th><th>Título</th><th>Duração</th><th>Status</th
+                    ><th>Ações</th></tr
+                  ></thead
+                ><tbody id="tableS"></tbody>
               </table>
             </div>
           </section>
 
-          <!-- BLOG TAB -->
           <section id="tab-blog" class="tab-section">
             <div class="section-header">
-              <h2>Gerenciar Blog</h2>
-              <button class="btn-primary" onclick="openModal('modalP')">Novo Artigo</button>
+              <h2>Gerenciar Blog</h2><button
+                class="btn-primary"
+                onclick="openP()">Novo Artigo</button
+              >
             </div>
             <div class="glass-card">
               <table>
-                <thead>
-                  <tr>
-                    <th>Título</th>
-                    <th>Categoria</th>
-                    <th>Publicação</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="tableP"></tbody>
+                <thead
+                  ><tr
+                    ><th>Título</th><th>Categoria</th><th>Publicação</th><th
+                      >Status</th
+                    ><th>Ações</th></tr
+                  ></thead
+                ><tbody id="tableP"></tbody>
               </table>
             </div>
           </section>
 
-          <!-- QUIZ TAB -->
           <section id="tab-quiz" class="tab-section">
             <div class="section-header">
-              <h2>Gerenciar Quiz Geral (FAQ)</h2>
-              <div style="display:flex; gap:1rem">
-                <button class="btn-sec" onclick="seedQuiz()" id="btnSeed">Importar Perguntas Padrão</button>
-                <button class="btn-primary" onclick="openQ()">Nova Pergunta</button>
+              <h2>Gerenciar Quiz Geral</h2><div style="display:flex; gap:1rem">
+                <button class="btn-sec" onclick="seedQuiz()" id="btnSeed"
+                  >Padrão</button
+                ><button class="btn-primary" onclick="openQ()">Novo</button>
               </div>
             </div>
             <div class="glass-card">
               <table>
-                <thead>
-                  <tr>
-                    <th>Ordem</th>
-                    <th>Página</th>
-                    <th>Pergunta</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="tableQ"></tbody>
+                <thead
+                  ><tr
+                    ><th>Ordem</th><th>Página</th><th>Pergunta</th><th
+                      >Status</th
+                    ><th>Ações</th></tr
+                  ></thead
+                ><tbody id="tableQ"></tbody>
               </table>
             </div>
           </section>
 
-          <!-- SETTINGS TAB -->
           <section id="tab-settings" class="tab-section">
             <div class="section-header">
-              <h2>Informações de Contato</h2>
-              <button class="btn-primary" onclick="saveSettings()" id="btnSaveSettings">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                Salvar Configurações
-              </button>
+              <h2>Contato</h2><button
+                class="btn-primary"
+                onclick="saveSettings()"
+                id="btnSaveSettings">Salvar</button
+              >
             </div>
-
-            <div class="settings-grid">
-              <!-- Contato Direto -->
-              <div class="settings-card glass-card">
-                <div class="settings-card__header">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.7 19.79 19.79 0 0 1 1.6 5.1 2 2 0 0 1 3.58 3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.64a16 16 0 0 0 6 6l1.06-1.06a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 17z"/></svg>
-                  <h3>Contato Direto</h3>
-                </div>
-                <div class="field"><label>WhatsApp (com DDI, ex: 5543991502223)</label><input id="cfg_whatsapp" placeholder="5543991502223" /></div>
-                <div class="field"><label>Telefone Fixo</label><input id="cfg_phone" placeholder="(43) 3377-1900" /></div>
-                <div class="field"><label>E-mail</label><input id="cfg_email" type="email" placeholder="contato@spaziovascolare.com.br" /></div>
+            <div class="form-grid">
+              <div class="field">
+                <label>WhatsApp</label><input id="cfg_whatsapp" />
               </div>
-
-              <!-- Endereço -->
-              <div class="settings-card glass-card">
-                <div class="settings-card__header">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  <h3>Endereço & Localização</h3>
-                </div>
-                <div class="field"><label>Endereço Completo</label><input id="cfg_address" placeholder="Rua Exemplo, 123 — Sala 45" /></div>
-                <div class="field"><label>Bairro / Cidade</label><input id="cfg_city" placeholder="Centro — Londrina/PR" /></div>
-                <div class="field"><label>CEP</label><input id="cfg_cep" placeholder="86010-000" /></div>
-                <div class="field"><label>Link Google Maps (URL curta ou embed src)</label><input id="cfg_maps" placeholder="https://maps.google.com/?q=..." /></div>
+              <div class="field">
+                <label>Telefone</label><input id="cfg_phone" />
               </div>
-
-              <!-- Horários -->
-              <div class="settings-card glass-card">
-                <div class="settings-card__header">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  <h3>Horários de Atendimento</h3>
-                </div>
-                <div class="field"><label>Segunda a Sexta</label><input id="cfg_hours_weekday" placeholder="08h – 18h" /></div>
-                <div class="field"><label>Sábado</label><input id="cfg_hours_sat" placeholder="08h – 12h" /></div>
-                <div class="field"><label>Domingo / Feriados</label><input id="cfg_hours_sun" placeholder="Fechado" /></div>
-                <div class="field"><label>Observação (ex: Atendimentos por agendamento)</label><input id="cfg_hours_obs" placeholder="Somente com agendamento prévio" /></div>
+              <div class="field">
+                <label>E-mail</label><input id="cfg_email" />
               </div>
-
-              <!-- Redes Sociais -->
-              <div class="settings-card glass-card">
-                <div class="settings-card__header">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M17 2H7a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5z"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                  <h3>Redes Sociais</h3>
-                </div>
-                <div class="field"><label>Instagram (URL completa)</label><input id="cfg_instagram" placeholder="https://instagram.com/spaziovascolare" /></div>
-                <div class="field"><label>Facebook (URL completa)</label><input id="cfg_facebook" placeholder="https://facebook.com/spaziovascolare" /></div>
-                <div class="field"><label>YouTube (URL completa)</label><input id="cfg_youtube" placeholder="https://youtube.com/@spaziovascolare" /></div>
-                <div class="field"><label>LinkedIn (URL completa)</label><input id="cfg_linkedin" placeholder="https://linkedin.com/in/monicaarena" /></div>
+              <div class="field">
+                <label>Endereço</label><input id="cfg_address" />
               </div>
-
-              <!-- Google Maps Embed Preview -->
-              <div class="settings-card glass-card" style="grid-column: span 2;">
-                <div class="settings-card__header">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-                  <h3>Embed do Google Maps</h3>
-                </div>
-                <div class="field"><label>Código iframe do Google Maps (cole o src do iframe de embed)</label><input id="cfg_maps_embed" placeholder="https://www.google.com/maps/embed?pb=..." /></div>
-                <button type="button" class="btn-sec" onclick="previewMap()" style="margin-top:0.5rem">Pré-visualizar Mapa</button>
-                <div id="mapPreview" style="margin-top:1rem;border-radius:16px;overflow:hidden;display:none;height:300px;">
-                  <iframe id="mapFrame" width="100%" height="300" style="border:0;" allowfullscreen loading="lazy"></iframe>
-                </div>
+              <div class="field">
+                <label>Cidade/UF</label><input id="cfg_city" />
+              </div>
+              <div class="field"><label>CEP</label><input id="cfg_cep" /></div>
+              <div class="field full">
+                <label>Link Maps</label><input id="cfg_maps" />
+              </div>
+              <div class="field full">
+                <label>Embed Maps (src)</label><input id="cfg_maps_embed" />
               </div>
             </div>
-
-            <style>
-              .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-              .settings-card { padding: 2rem; display: flex; flex-direction: column; gap: 1rem; }
-              .settings-card__header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
-              .settings-card__header h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; }
-              @media (max-width: 1024px) { .settings-grid { grid-template-columns: 1fr; } .settings-card[style*="span 2"] { grid-column: span 1; } }
-            </style>
           </section>
         </div>
       </main>
     </div>
 
-    <!-- MODAL TRATAMENTO -->
+    <!-- MODALS (Simplified for script) -->
     <div class="modal-overlay" id="modalT">
       <div class="modal">
-        <button class="modal-close" onclick="closeModal('modalT')">&times;</button>
-        <h2 id="titleT">Novo Tratamento</h2>
-        <form id="formT">
-          <input type="hidden" id="t_id" />
-          <div class="form-grid">
-            <div class="field"><label>Ícone (Texto/Número)</label><input id="t_icon" placeholder="ex: 01" /></div>
-            <div class="field"><label>Ordem de Exibição</label><input type="number" id="t_order" value="1" /></div>
-            <div class="field full"><label>Título</label><input id="t_title" required /></div>
-            <div class="field full"><label>Slug (Link da página)</label><input id="t_slug" placeholder="ex: escleroterapia-laser" /></div>
-            <div class="field full"><label>Subtítulo</label><input id="t_subtitle" /></div>
-            <div class="field full"><label>URL Imagem de Capa</label><input id="t_cover" placeholder="https://..." /></div>
-            <div class="field full">
-              <label>Descrição</label>
-              <div id="editorT"></div>
-            </div>
-            <div class="field"><label>Duração</label><input id="t_dur" /></div>
-            <div class="field"><label>Recuperação</label><input id="t_rec" /></div>
+        <button class="modal-close" onclick="closeModal('modalT')"
+          >&times;</button
+        ><h2 id="titleT">Tratamento</h2><form id="formT">
+          <input type="hidden" id="t_id" /><div class="form-grid">
             <div class="field">
-              <label>Status</label>
-              <select id="t_active"><option value="true">Ativo</option><option value="false">Inativo</option></select>
+              <label>Ícone</label><input id="t_icon" />
+            </div><div class="field">
+              <label>Ordem</label><input type="number" id="t_order" value="1" />
+            </div><div class="field full">
+              <label>Título</label><input id="t_title" required />
+            </div><div class="field full">
+              <label>Slug</label><input id="t_slug" />
+            </div><div class="field full">
+              <label>Subtítulo</label><div id="editorSubT"></div>
+            </div><div class="field full">
+              <label>Imagem</label><input id="t_cover" />
+            </div><div class="field full">
+              <label>Descrição</label><div id="editorT"></div>
+            </div><div class="field">
+              <label>Duração</label><input id="t_dur" />
+            </div><div class="field">
+              <label>Recuperação</label><input id="t_rec" />
+            </div><div class="field">
+              <label>Ativo</label><select id="t_active"
+                ><option value="true">Sim</option><option value="false"
+                  >Não</option
+                ></select
+              >
+            </div><div class="field">
+              <label>Destaque</label><select id="t_highlight"
+                ><option value="false">Não</option><option value="true"
+                  >Sim</option
+                ></select
+              >
             </div>
-            <div class="field">
-              <label>Destaque (Card Maior)</label>
-              <select id="t_highlight"><option value="false">Não</option><option value="true">Sim</option></select>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn-sec" onclick="closeModal('modalT')">Cancelar</button>
-            <button type="submit" class="btn-primary" id="btnSaveT">Salvar Tratamento</button>
+          </div><div class="modal-footer">
+            <button type="submit" class="btn-primary">Salvar</button>
           </div>
         </form>
       </div>
     </div>
 
-    <!-- MODAL CIRURGIA -->
     <div class="modal-overlay" id="modalS">
       <div class="modal">
-        <button class="modal-close" onclick="closeModal('modalS')">&times;</button>
-        <h2 id="titleS">Nova Cirurgia</h2>
-        <form id="formS">
-          <input type="hidden" id="s_id" />
-          <div class="form-grid">
-            <div class="field"><label>Número (Texto)</label><input id="s_num" placeholder="ex: 01" /></div>
-            <div class="field"><label>Ordem</label><input type="number" id="s_order" value="1" /></div>
-            <div class="field full"><label>Título</label><input id="s_title" required /></div>
-            <div class="field full"><label>Slug (Link da página)</label><input id="s_slug" placeholder="ex: safenectomia" /></div>
-            <div class="field full"><label>URL Imagem de Capa</label><input id="s_cover" placeholder="https://..." /></div>
-            <div class="field full">
-              <label>Descrição</label>
-              <div id="editorS"></div>
-            </div>
-            <div class="field"><label>Duração</label><input id="s_dur" /></div>
-            <div class="field"><label>Recuperação</label><input id="s_rec" /></div>
-            <div class="field full"><label>Anestesia</label><input id="s_ane" /></div>
+        <button class="modal-close" onclick="closeModal('modalS')"
+          >&times;</button
+        ><h2 id="titleS">Cirurgia</h2><form id="formS">
+          <input type="hidden" id="s_id" /><div class="form-grid">
             <div class="field">
-              <label>Status</label>
-              <select id="s_active"><option value="true">Ativo</option><option value="false">Inativo</option></select>
+              <label>Número</label><input id="s_num" />
+            </div><div class="field">
+              <label>Ordem</label><input type="number" id="s_order" value="1" />
+            </div><div class="field full">
+              <label>Título</label><input id="s_title" required />
+            </div><div class="field full">
+              <label>Slug</label><input id="s_slug" />
+            </div><div class="field full">
+              <label>Subtítulo</label><div id="editorSubS"></div>
+            </div><div class="field full">
+              <label>Imagem</label><input id="s_cover" />
+            </div><div class="field full">
+              <label>Descrição</label><div id="editorS"></div>
+            </div><div class="field">
+              <label>Duração</label><input id="s_dur" />
+            </div><div class="field">
+              <label>Recuperação</label><input id="s_rec" />
+            </div><div class="field">
+              <label>Anestesia</label><input id="s_ane" />
+            </div><div class="field">
+              <label>Ativo</label><select id="s_active"
+                ><option value="true">Sim</option><option value="false"
+                  >Não</option
+                ></select
+              >
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn-sec" onclick="closeModal('modalS')">Cancelar</button>
-            <button type="submit" class="btn-primary" id="btnSaveS">Salvar Cirurgia</button>
+          </div><div class="modal-footer">
+            <button type="submit" class="btn-primary">Salvar</button>
           </div>
         </form>
       </div>
     </div>
 
-    <!-- MODAL BLOG -->
     <div class="modal-overlay" id="modalP">
       <div class="modal">
-        <button class="modal-close" onclick="closeModal('modalP')">&times;</button>
-        <h2 id="titleP">Novo Post</h2>
-        <form id="formP">
-          <input type="hidden" id="p_id" />
-          <div class="form-grid">
-            <div class="field full"><label>Título</label><input id="p_title" required /></div>
-            <div class="field full"><label>Slug (URL)</label><input id="p_slug" required /></div>
+        <button class="modal-close" onclick="closeModal('modalP')"
+          >&times;</button
+        ><h2 id="titleP">Post</h2><form id="formP">
+          <input type="hidden" id="p_id" /><div class="form-grid">
             <div class="field full">
-              <label>Resumo (Excerpt)</label>
-              <div id="editorExc"></div>
+              <label>Título</label><input id="p_title" required />
+            </div><div class="field full">
+              <label>Slug</label><input id="p_slug" required />
+            </div><div class="field full">
+              <label>Resumo</label><div id="editorExc"></div>
+            </div><div class="field full">
+              <label>Conteúdo</label><div id="editorP"></div>
+            </div><div class="field">
+              <label>Categoria</label><select id="p_cat"
+                ><option value="Tratamentos">Tratamentos</option><option
+                  value="Cirurgia">Cirurgia</option
+                ><option value="Saúde Vascular">Saúde Vascular</option></select
+              >
+            </div><div class="field">
+              <label>Data</label><input type="date" id="p_date" />
+            </div><div class="field full">
+              <label>Imagem</label><input id="p_img" />
+            </div><div class="field">
+              <label>Publicado</label><select id="p_pub"
+                ><option value="true">Sim</option><option value="false"
+                  >Não</option
+                ></select
+              >
             </div>
-            <div class="field full">
-              <label>Conteúdo Completo</label>
-              <div id="editorP"></div>
-            </div>
-            <div class="field">
-              <label>Categoria</label>
-              <select id="p_cat">
-                <option value="Tratamentos">Tratamentos</option>
-                <option value="Saúde Vascular">Saúde Vascular</option>
-                <option value="Laser">Laser</option>
-                <option value="Cirurgia">Cirurgia</option>
-                <option value="Prevenção">Prevenção</option>
-              </select>
-            </div>
-            <div class="field"><label>Data Publicação</label><input type="date" id="p_date" /></div>
-            <div class="field full"><label>URL Imagem de Capa</label><input id="p_img" /></div>
-            <div class="field">
-              <label>Status</label>
-              <select id="p_pub"><option value="true">Publicado</option><option value="false">Rascunho</option></select>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn-sec" onclick="closeModal('modalP')">Cancelar</button>
-            <button type="submit" class="btn-primary" id="btnSaveP">Salvar Post</button>
+          </div><div class="modal-footer">
+            <button type="submit" class="btn-primary">Salvar</button>
           </div>
         </form>
       </div>
     </div>
 
-    <!-- MODAL QUIZ -->
     <div class="modal-overlay" id="modalQ">
       <div class="modal">
-        <button class="modal-close" onclick="closeModal('modalQ')">&times;</button>
-        <h2 id="titleQ">Nova Pergunta</h2>
-        <form id="formQ">
-          <input type="hidden" id="q_id" />
-          <div class="form-grid">
+        <button class="modal-close" onclick="closeModal('modalQ')"
+          >&times;</button
+        ><h2 id="titleQ">Pergunta</h2><form id="formQ">
+          <input type="hidden" id="q_id" /><div class="form-grid">
             <div class="field">
-              <label>Página de Exibição</label>
-              <select id="q_page" required>
-                <option value="home">Home</option>
-                <option value="tratamentos">Tratamentos</option>
-                <option value="cirurgias">Cirurgias</option>
-                <option value="blog">Blog</option>
-              </select>
+              <label>Página</label><select id="q_page"
+                ><option value="home">Home</option><option value="tratamentos"
+                  >Tratamentos</option
+                ><option value="cirurgias">Cirurgias</option></select
+              >
+            </div><div class="field">
+              <label>Ordem</label><input type="number" id="q_order" value="1" />
+            </div><div class="field full">
+              <label>Pergunta</label><input id="q_question" required />
+            </div><div class="field full">
+              <label>Resposta</label><textarea id="q_answer" required
+              ></textarea>
+            </div><div class="field">
+              <label>Ativo</label><select id="q_active"
+                ><option value="true">Sim</option><option value="false"
+                  >Não</option
+                ></select
+              >
             </div>
-            <div class="field"><label>Ordem</label><input type="number" id="q_order" value="1" /></div>
-            <div class="field full"><label>Pergunta</label><input id="q_question" required /></div>
-            <div class="field full"><label>Resposta</label><textarea id="q_answer" required></textarea></div>
-            <div class="field">
-              <label>Status</label>
-              <select id="q_active"><option value="true">Ativo</option><option value="false">Inativo</option></select>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn-sec" onclick="closeModal('modalQ')">Cancelar</button>
-            <button type="submit" class="btn-primary">Salvar Pergunta</button>
+          </div><div class="modal-footer">
+            <button type="submit" class="btn-primary">Salvar</button>
           </div>
         </form>
       </div>
@@ -630,559 +997,350 @@
     <div class="toast-container" id="toasts"></div>
 
     <script>
-      // CONFIG & API
-      const ENDPOINT = 'https://appwrite.netcidade.com/v1';
-      const PROJECT = 'spazio-vascolare';
-      const DB = 'spazio-vascolare';
-      const COLLECTIONS = { t: 'tratamentos', s: 'cirurgias', p: 'blog_posts', q: 'quiz', cfg: 'site_settings' };
-      const SETTINGS_DOC_ID = 'main'; // ID fixo do documento de configurações
+      import {
+        call,
+        slugify,
+        toast,
+        uniqueId,
+        loadStats,
+        loadAll,
+        loadSettings,
+        initTabs,
+        initEditors,
+      } from "../../lib/dashboard-api.ts";
+      import { DATABASE_ID, COLLECTIONS } from "../../lib/appwrite.ts";
 
-      const EDIT_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
-      const DEL_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>`;
-      const LINK_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>`;
+      const SETTINGS_DOC_ID = "main";
 
-      const getHeaders = () => ({
-        'Content-Type': 'application/json',
-        'X-Appwrite-Project': PROJECT,
-        'x-fallback-cookies': localStorage.getItem('cookieFallback') || ''
-      });
-
-      async function call(path, opts = {}) {
-        const res = await fetch(`${ENDPOINT}${path}`, { ...opts, credentials: 'include', headers: { ...getHeaders(), ...opts.headers } });
-        if (!res.ok) {
-          const err = await res.json().catch(() => ({}));
-          throw new Error(err.message || 'Erro de rede');
-        }
-        if (res.status === 204) return null;
-        return res.json().catch(() => null);
-      }
-
-      // Helpers
-      function slugify(text) {
-        return text.toString().toLowerCase().trim()
-          .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove acentos
-          .replace(/\s+/g, '-') // Espaços para -
-          .replace(/[^\w-]+/g, '') // Remove tudo que não é letra/número/-
-          .replace(/--+/g, '-'); // Remove duplos --
-      }
-
-      function toast(msg) {
-        const container = document.getElementById('toasts');
-        const el = document.createElement('div');
-        el.className = 'toast';
-        el.textContent = msg;
-        container.appendChild(el);
-        setTimeout(() => el.remove(), 3000);
-      }
-
-      function uniqueId() { return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15); }
-
-      // AUTH & INIT
+      // INIT
       (async () => {
         try {
-          const user = await call('/account');
-          document.getElementById('userEmail').textContent = user.email;
-          document.getElementById('loader').classList.add('hidden');
+          const user = await call("/account");
+          const emailEl = document.getElementById("userEmail");
+          if (emailEl) emailEl.textContent = user.email;
+          document.getElementById("loader")?.classList.add("hidden");
           initTabs();
           initEditors();
           loadStats();
           loadAll();
           loadSettings();
         } catch (e) {
-          window.location.href = '/admin';
+          window.location.href = "/admin";
         }
       })();
 
-      const qConfig = {
-        theme: 'snow',
-        modules: {
-          toolbar: [
-            ['bold', 'italic', 'underline'],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            ['link', 'clean']
-          ]
-        }
-      };
-      let quillT, quillS, quillP, quillExc;
-      function initEditors() {
-        quillT = new Quill('#editorT', qConfig);
-        quillS = new Quill('#editorS', qConfig);
-        quillP = new Quill('#editorP', qConfig);
-        quillExc = new Quill('#editorExc', qConfig);
-      }
-
-      function initTabs() {
-        const links = document.querySelectorAll('.nav-link[data-tab]');
-        links.forEach(l => l.addEventListener('click', () => {
-          links.forEach(x => x.classList.remove('active'));
-          l.classList.add('active');
-          const tab = l.dataset.tab;
-          document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
-          document.getElementById(`tab-${tab}`).classList.add('active');
-          document.getElementById('tabTitle').textContent = l.textContent;
-        }));
-      }
-
-      // Auto-slug listeners
-      document.getElementById('t_title')?.addEventListener('input', (e) => {
-        document.getElementById('t_slug').value = slugify(e.target.value);
-      });
-      document.getElementById('s_title')?.addEventListener('input', (e) => {
-        document.getElementById('s_slug').value = slugify(e.target.value);
-      });
-      document.getElementById('p_title')?.addEventListener('input', (e) => {
-        document.getElementById('p_slug').value = slugify(e.target.value);
+      // UTILS
+      window.openModal = (id) =>
+        document.getElementById(id).classList.add("open");
+      window.closeModal = (id) =>
+        document.getElementById(id).classList.remove("open");
+      
+      // CARD NAVIGATION
+      document.querySelectorAll('.stat-card[data-goto]').forEach(card => {
+        card.addEventListener('click', () => {
+          const tab = (card as HTMLElement).dataset.goto;
+          const btn = document.querySelector(`.nav-link[data-tab="${tab}"]`);
+          if (btn) (btn as HTMLButtonElement).click();
+        });
       });
 
-      // DATA LOADING
-      window.loadStats = async function() {
-        try {
-          const [t, s, p, q] = await Promise.all([
-            call(`/databases/${DB}/collections/${COLLECTIONS.t}/documents?limit=0`),
-            call(`/databases/${DB}/collections/${COLLECTIONS.s}/documents?limit=0`),
-            call(`/databases/${DB}/collections/${COLLECTIONS.p}/documents?limit=0`),
-            call(`/databases/${DB}/collections/${COLLECTIONS.q}/documents?limit=0`)
-          ]);
-          document.getElementById('count-t').textContent = t.total;
-          document.getElementById('count-s').textContent = s.total;
-          document.getElementById('count-p').textContent = p.total;
-          document.getElementById('count-q').textContent = q.total;
-        } catch (e) {}
+      // MOBILE MENU TOGGLE
+      const sidebarEl = document.querySelector('.sidebar');
+      const overlayEl = document.getElementById('sidebarOverlay');
+      const menuBtnEl = document.getElementById('menuBtn');
+      
+      function toggleMenu() {
+        console.log('Toggling menu...');
+        sidebarEl?.classList.toggle('active');
+        overlayEl?.classList.toggle('active');
       }
+      
+      if (menuBtnEl) menuBtnEl.onclick = toggleMenu;
+      if (overlayEl) overlayEl.onclick = toggleMenu;
+      
+      // Auto close menu on tab click (mobile)
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 1024) toggleMenu();
+        });
+      });
 
-      let dataT = [], dataS = [], dataP = [], dataQ = [];
-
-      window.loadAll = async function() {
-        try {
-          const [t, s, p, q] = await Promise.all([
-            call(`/databases/${DB}/collections/${COLLECTIONS.t}/documents?limit=100&orderAttributes[]=order&orderTypes[]=ASC`),
-            call(`/databases/${DB}/collections/${COLLECTIONS.s}/documents?limit=100&orderAttributes[]=order&orderTypes[]=ASC`),
-            call(`/databases/${DB}/collections/${COLLECTIONS.p}/documents?limit=100&orderAttributes[]=%24createdAt&orderTypes[]=DESC`),
-            call(`/databases/${DB}/collections/${COLLECTIONS.q}/documents?limit=100&orderAttributes[]=order&orderTypes[]=ASC`)
-          ]);
-          dataT = t.documents; dataS = s.documents; dataP = p.documents; dataQ = q.documents;
-          renderT(); renderS(); renderP(); renderQ();
-        } catch (e) { toast('Erro ao carregar dados'); }
-      }
-
-      // RENDERING
-      window.renderT = function() {
-        document.getElementById('tableT').innerHTML = dataT.map(d => `
-          <tr>
-            <td style="font-family:var(--font-mono)">${d.order}</td>
-            <td style="font-weight:700">${d.title}</td>
-            <td style="color:var(--text-muted);font-size:0.8rem">${d.subtitle || '—'}</td>
-            <td><span class="badge ${d.active ? 'badge--ok' : 'badge--wait'}">${d.active ? 'Ativo' : 'Off'}</span></td>
-            <td>
-              <div class="row-actions">
-                <button class="btn-icon" onclick="editT('${d.$id}')">${EDIT_SVG}</button>
-                <button class="btn-icon" onclick="deleteDoc('${COLLECTIONS.t}', '${d.$id}', renderT)">${DEL_SVG}</button>
-              </div>
-            </td>
-          </tr>
-        `).join('');
-      }
-
-      window.renderS = function() {
-        document.getElementById('tableS').innerHTML = dataS.map(d => `
-          <tr>
-            <td style="font-family:var(--font-mono)">${d.order}</td>
-            <td style="font-weight:700">${d.title}</td>
-            <td style="color:var(--text-muted);font-size:0.8rem">${d.duration || '—'}</td>
-            <td><span class="badge ${d.active ? 'badge--ok' : 'badge--wait'}">${d.active ? 'Ativo' : 'Off'}</span></td>
-            <td>
-              <div class="row-actions">
-                <button class="btn-icon" onclick="editS('${d.$id}')">${EDIT_SVG}</button>
-                <button class="btn-icon" onclick="deleteDoc('${COLLECTIONS.s}', '${d.$id}', renderS)">${DEL_SVG}</button>
-              </div>
-            </td>
-          </tr>
-        `).join('');
-      }
-
-      window.renderP = function() {
-        document.getElementById('tableP').innerHTML = dataP.map(d => `
-          <tr>
-            <td style="font-weight:700">${d.title}</td>
-            <td style="font-family:var(--font-mono);font-size:0.75rem">${d.category}</td>
-            <td style="color:var(--text-muted);font-size:0.8rem">${d.published_at ? new Date(d.published_at).toLocaleDateString() : '—'}</td>
-            <td><span class="badge ${d.published ? 'badge--ok' : 'badge--wait'}">${d.published ? 'Live' : 'Draft'}</span></td>
-            <td>
-              <div class="row-actions">
-                <button class="btn-icon" onclick="editP('${d.$id}')">${EDIT_SVG}</button>
-                <a href="/blog/${d.slug}" target="_blank" class="btn-icon">${LINK_SVG}</a>
-                <button class="btn-icon" onclick="deleteDoc('${COLLECTIONS.p}', '${d.$id}', renderP)">${DEL_SVG}</button>
-              </div>
-            </td>
-          </tr>
-        `).join('');
-      }
-
-      window.renderQ = function() {
-        document.getElementById('tableQ').innerHTML = dataQ.map(d => `
-          <tr>
-            <td style="font-family:var(--font-mono)">${d.order}</td>
-            <td style="text-transform:uppercase;font-size:0.75rem;font-weight:700">${d.page}</td>
-            <td style="font-weight:700">${d.question}</td>
-            <td><span class="badge ${d.active ? 'badge--ok' : 'badge--wait'}">${d.active ? 'Ativo' : 'Off'}</span></td>
-            <td>
-              <div class="row-actions">
-                <button class="btn-icon" onclick="editQ('${d.$id}')">${EDIT_SVG}</button>
-                <button class="btn-icon" onclick="deleteDoc('${COLLECTIONS.q}', '${d.$id}', renderQ)">${DEL_SVG}</button>
-              </div>
-            </td>
-          </tr>
-        `).join('');
-      }
-
-      // MODALS & CRUD
-      window.openModal = (id) => document.getElementById(id).classList.add('open');
-      window.closeModal = (id) => document.getElementById(id).classList.remove('open');
+      // SLUGS
+      ["t", "s", "p"].forEach((x) => {
+        document.getElementById(x + "_title")?.addEventListener("input", (e) => {
+          const el = document.getElementById(x + "_slug");
+          if (el) el.value = slugify((e.target as HTMLInputElement).value);
+        });
+      });
 
       // TRATAMENTOS
       window.openT = () => {
-        document.getElementById('formT').reset();
-        document.getElementById('t_id').value = '';
-        quillT.setContents([]);
-        document.getElementById('titleT').textContent = 'Novo Tratamento';
-        openModal('modalT');
+        document.getElementById("formT").reset();
+        document.getElementById("t_id").value = "";
+        window.quillT.setContents([]);
+        window.quillSubT.setContents([]);
+        document.getElementById("titleT").textContent = "Novo Tratamento";
+        openModal("modalT");
       };
-
       window.editT = (id) => {
-        const d = dataT.find(x => x.$id === id);
-        document.getElementById('t_id').value = d.$id;
-        document.getElementById('t_icon').value = d.icon || '';
-        document.getElementById('t_order').value = d.order || 1;
-        document.getElementById('t_title').value = d.title;
-        document.getElementById('t_slug').value = d.slug || '';
-        document.getElementById('t_subtitle').value = d.subtitle || '';
-        document.getElementById('t_cover').value = d.cover_url || '';
-        quillT.root.innerHTML = d.description || '';
-        document.getElementById('t_dur').value = d.duration || '';
-        document.getElementById('t_rec').value = d.recovery || '';
-        document.getElementById('t_active').value = d.active.toString();
-        document.getElementById('t_highlight').value = d.highlight.toString();
-        document.getElementById('titleT').textContent = 'Editar Tratamento';
-        openModal('modalT');
+        const d = window.dataT.find((x) => x.$id === id);
+        if (!d) return;
+        document.getElementById("t_id").value = d.$id;
+        document.getElementById("t_icon").value = d.icon || "";
+        document.getElementById("t_order").value = d.order || 1;
+        document.getElementById("t_title").value = d.title;
+        document.getElementById("t_slug").value = d.slug || "";
+        window.quillSubT.root.innerHTML = d.subtitle || "";
+        document.getElementById("t_cover").value = d.cover_url || "";
+        window.quillT.root.innerHTML = d.description || "";
+        document.getElementById("t_dur").value = d.duration || "";
+        document.getElementById("t_rec").value = d.recovery || "";
+        document.getElementById("t_active").value = d.active.toString();
+        document.getElementById("t_highlight").value = d.highlight.toString();
+        openModal("modalT");
       };
-
-      document.getElementById('formT').addEventListener('submit', async (e) => {
+      document.getElementById("formT").addEventListener("submit", async (e) => {
         e.preventDefault();
-        const id = document.getElementById('t_id').value;
+        const id = document.getElementById("t_id").value;
         const data = {
-          icon: document.getElementById('t_icon').value,
-          order: parseInt(document.getElementById('t_order').value),
-          title: document.getElementById('t_title').value,
-          slug: document.getElementById('t_slug').value,
-          subtitle: document.getElementById('t_subtitle').value,
-          cover_url: document.getElementById('t_cover').value,
-          description: quillT.root.innerHTML,
-          duration: document.getElementById('t_dur').value,
-          recovery: document.getElementById('t_rec').value,
-          active: document.getElementById('t_active').value === 'true',
-          highlight: document.getElementById('t_highlight').value === 'true'
+          icon: document.getElementById("t_icon").value,
+          order: parseInt(document.getElementById("t_order").value),
+          title: document.getElementById("t_title").value,
+          slug: document.getElementById("t_slug").value,
+          subtitle: window.quillSubT.root.innerHTML,
+          cover_url: document.getElementById("t_cover").value,
+          description: window.quillT.root.innerHTML,
+          duration: document.getElementById("t_dur").value,
+          recovery: document.getElementById("t_rec").value,
+          active: document.getElementById("t_active").value === "true",
+          highlight: document.getElementById("t_highlight").value === "true",
         };
         try {
-          if (id) await call(`/databases/${DB}/collections/${COLLECTIONS.t}/documents/${id}`, { method: 'PATCH', body: JSON.stringify({ data }) });
-          else await call(`/databases/${DB}/collections/${COLLECTIONS.t}/documents`, { method: 'POST', body: JSON.stringify({ documentId: uniqueId(), data, permissions: [] }) });
-          toast('Tratamento salvo com sucesso!'); closeModal('modalT'); loadAll(); loadStats();
-        } catch (e) { 
-          console.error(e);
-          toast(`Erro: ${e.message}`, 'error'); 
+          if (id)
+            await call(
+              `/databases/${DATABASE_ID}/collections/${COLLECTIONS.TREATMENTS}/documents/${id}`,
+              { method: "PATCH", body: JSON.stringify({ data }) },
+            );
+          else
+            await call(
+              `/databases/${DATABASE_ID}/collections/${COLLECTIONS.TREATMENTS}/documents`,
+              {
+                method: "POST",
+                body: JSON.stringify({
+                  documentId: uniqueId(),
+                  data,
+                  permissions: [],
+                }),
+              },
+            );
+          toast("Salvo!");
+          closeModal("modalT");
+          loadAll();
+          loadStats();
+        } catch (e) {
+          toast("Erro");
         }
       });
 
       // CIRURGIAS
       window.openS = () => {
-        document.getElementById('formS').reset();
-        document.getElementById('s_id').value = '';
-        quillS.setContents([]);
-        document.getElementById('titleS').textContent = 'Nova Cirurgia';
-        openModal('modalS');
+        document.getElementById("formS").reset();
+        document.getElementById("s_id").value = "";
+        window.quillS.setContents([]);
+        window.quillSubS.setContents([]);
+        document.getElementById("titleS").textContent = "Nova Cirurgia";
+        openModal("modalS");
       };
-
       window.editS = (id) => {
-        const d = dataS.find(x => x.$id === id);
-        document.getElementById('s_id').value = d.$id;
-        document.getElementById('s_num').value = d.number || '';
-        document.getElementById('s_order').value = d.order || 1;
-        document.getElementById('s_title').value = d.title;
-        document.getElementById('s_slug').value = d.slug || '';
-        document.getElementById('s_cover').value = d.cover_url || '';
-        quillS.root.innerHTML = d.description || '';
-        document.getElementById('s_dur').value = d.duration || '';
-        document.getElementById('s_rec').value = d.recovery || '';
-        document.getElementById('s_ane').value = d.anesthesia || '';
-        document.getElementById('s_active').value = d.active.toString();
-        document.getElementById('titleS').textContent = 'Editar Cirurgia';
-        openModal('modalS');
+        const d = window.dataS.find((x) => x.$id === id);
+        if (!d) return;
+        document.getElementById("s_id").value = d.$id;
+        document.getElementById("s_num").value = d.number || "";
+        document.getElementById("s_order").value = d.order || 1;
+        document.getElementById("s_title").value = d.title;
+        document.getElementById("s_slug").value = d.slug || "";
+        window.quillSubS.root.innerHTML = d.subtitle || "";
+        document.getElementById("s_cover").value = d.cover_url || "";
+        window.quillS.root.innerHTML = d.description || "";
+        document.getElementById("s_dur").value = d.duration || "";
+        document.getElementById("s_rec").value = d.recovery || "";
+        document.getElementById("s_ane").value = d.anesthesia || "";
+        document.getElementById("s_active").value = d.active.toString();
+        openModal("modalS");
       };
-
-      document.getElementById('formS').addEventListener('submit', async (e) => {
+      document.getElementById("formS").addEventListener("submit", async (e) => {
         e.preventDefault();
-        const id = document.getElementById('s_id').value;
+        const id = document.getElementById("s_id").value;
         const data = {
-          number: document.getElementById('s_num').value,
-          order: parseInt(document.getElementById('s_order').value),
-          title: document.getElementById('s_title').value,
-          slug: document.getElementById('s_slug').value,
-          cover_url: document.getElementById('s_cover').value,
-          description: quillS.root.innerHTML,
-          duration: document.getElementById('s_dur').value,
-          recovery: document.getElementById('s_rec').value,
-          anesthesia: document.getElementById('s_ane').value,
-          active: document.getElementById('s_active').value === 'true'
+          number: document.getElementById("s_num").value,
+          order: parseInt(document.getElementById("s_order").value),
+          title: document.getElementById("s_title").value,
+          slug: document.getElementById("s_slug").value,
+          subtitle: window.quillSubS.root.innerHTML,
+          cover_url: document.getElementById("s_cover").value,
+          description: window.quillS.root.innerHTML,
+          duration: document.getElementById("s_dur").value,
+          recovery: document.getElementById("s_rec").value,
+          anesthesia: document.getElementById("s_ane").value,
+          active: document.getElementById("s_active").value === "true",
         };
         try {
-          if (id) await call(`/databases/${DB}/collections/${COLLECTIONS.s}/documents/${id}`, { method: 'PATCH', body: JSON.stringify({ data }) });
-          else await call(`/databases/${DB}/collections/${COLLECTIONS.s}/documents`, { method: 'POST', body: JSON.stringify({ documentId: uniqueId(), data, permissions: [] }) });
-          toast('Cirurgia salva com sucesso!'); closeModal('modalS'); loadAll(); loadStats();
-        } catch (e) { 
-          console.error(e);
-          toast(`Erro: ${e.message}`, 'error'); 
+          if (id)
+            await call(
+              `/databases/${DATABASE_ID}/collections/${COLLECTIONS.SURGERIES}/documents/${id}`,
+              { method: "PATCH", body: JSON.stringify({ data }) },
+            );
+          else
+            await call(
+              `/databases/${DATABASE_ID}/collections/${COLLECTIONS.SURGERIES}/documents`,
+              {
+                method: "POST",
+                body: JSON.stringify({
+                  documentId: uniqueId(),
+                  data,
+                  permissions: [],
+                }),
+              },
+            );
+          toast("Salvo!");
+          closeModal("modalS");
+          loadAll();
+          loadStats();
+        } catch (e) {
+          toast("Erro");
         }
       });
 
       // BLOG
       window.openP = () => {
-        document.getElementById('formP').reset();
-        document.getElementById('p_id').value = '';
-        quillP.setContents([]);
-        quillExc.setContents([]);
-        document.getElementById('titleP').textContent = 'Novo Post';
-        openModal('modalP');
+        document.getElementById("formP").reset();
+        document.getElementById("p_id").value = "";
+        window.quillP.setContents([]);
+        window.quillExc.setContents([]);
+        openModal("modalP");
       };
-
       window.editP = (id) => {
-        const d = dataP.find(x => x.$id === id);
-        document.getElementById('p_id').value = d.$id;
-        document.getElementById('p_title').value = d.title;
-        document.getElementById('p_slug').value = d.slug;
-        quillExc.root.innerHTML = d.excerpt || '';
-        quillP.root.innerHTML = d.content || '';
-        document.getElementById('p_cat').value = d.category;
-        document.getElementById('p_date').value = d.published_at ? d.published_at.split('T')[0] : '';
-        document.getElementById('p_img').value = d.cover_url || '';
-        document.getElementById('p_pub').value = d.published.toString();
-        document.getElementById('titleP').textContent = 'Editar Post';
-        openModal('modalP');
+        const d = window.dataP.find((x) => x.$id === id);
+        if (!d) return;
+        document.getElementById("p_id").value = d.$id;
+        document.getElementById("p_title").value = d.title;
+        document.getElementById("p_slug").value = d.slug;
+        window.quillExc.root.innerHTML = d.excerpt || "";
+        window.quillP.root.innerHTML = d.content || "";
+        document.getElementById("p_cat").value = d.category;
+        document.getElementById("p_date").value = d.published_at
+          ? d.published_at.split("T")[0]
+          : "";
+        document.getElementById("p_img").value = d.cover_url || "";
+        document.getElementById("p_pub").value = d.published.toString();
+        openModal("modalP");
       };
-
-
-      document.getElementById('formP').addEventListener('submit', async (e) => {
+      document.getElementById("formP").addEventListener("submit", async (e) => {
         e.preventDefault();
-        const id = document.getElementById('p_id').value;
+        const id = document.getElementById("p_id").value;
         const data = {
-          title: document.getElementById('p_title').value,
-          slug: document.getElementById('p_slug').value,
-          excerpt: quillExc.root.innerHTML,
-          content: quillP.root.innerHTML,
-          category: document.getElementById('p_cat').value,
-          published_at: document.getElementById('p_date').value ? new Date(document.getElementById('p_date').value).toISOString() : new Date().toISOString(),
-          cover_url: document.getElementById('p_img').value,
-          published: document.getElementById('p_pub').value === 'true'
+          title: document.getElementById("p_title").value,
+          slug: document.getElementById("p_slug").value,
+          excerpt: window.quillExc.root.innerHTML,
+          content: window.quillP.root.innerHTML,
+          category: document.getElementById("p_cat").value,
+          published_at: document.getElementById("p_date").value
+            ? new Date(document.getElementById("p_date").value).toISOString()
+            : new Date().toISOString(),
+          cover_url: document.getElementById("p_img").value,
+          published: document.getElementById("p_pub").value === "true",
         };
         try {
-          if (id) await call(`/databases/${DB}/collections/${COLLECTIONS.p}/documents/${id}`, { method: 'PATCH', body: JSON.stringify({ data }) });
-          else await call(`/databases/${DB}/collections/${COLLECTIONS.p}/documents`, { method: 'POST', body: JSON.stringify({ documentId: uniqueId(), data, permissions: [] }) });
-          toast('Post salvo com sucesso!'); closeModal('modalP'); loadAll(); loadStats();
-        } catch (e) { 
-          console.error(e);
-          toast(`Erro: ${e.message}`, 'error'); 
+          if (id)
+            await call(
+              `/databases/${DATABASE_ID}/collections/${COLLECTIONS.POSTS}/documents/${id}`,
+              { method: "PATCH", body: JSON.stringify({ data }) },
+            );
+          else
+            await call(
+              `/databases/${DATABASE_ID}/collections/${COLLECTIONS.POSTS}/documents`,
+              {
+                method: "POST",
+                body: JSON.stringify({
+                  documentId: uniqueId(),
+                  data,
+                  permissions: [],
+                }),
+              },
+            );
+          toast("Salvo!");
+          closeModal("modalP");
+          loadAll();
+          loadStats();
+        } catch (e) {
+          toast("Erro");
         }
       });
+
       // QUIZ
       window.openQ = () => {
-        document.getElementById('formQ').reset();
-        document.getElementById('q_id').value = '';
-        document.getElementById('titleQ').textContent = 'Nova Pergunta';
-        openModal('modalQ');
+        document.getElementById("formQ").reset();
+        document.getElementById("q_id").value = "";
+        openModal("modalQ");
       };
-
       window.editQ = (id) => {
-        const d = dataQ.find(x => x.$id === id);
-        document.getElementById('q_id').value = d.$id;
-        document.getElementById('q_page').value = d.page;
-        document.getElementById('q_order').value = d.order || 1;
-        document.getElementById('q_question').value = d.question;
-        document.getElementById('q_answer').value = d.answer;
-        document.getElementById('q_active').value = d.active.toString();
-        document.getElementById('titleQ').textContent = 'Editar Pergunta';
-        openModal('modalQ');
+        const d = window.dataQ.find((x) => x.$id === id);
+        if (!d) return;
+        document.getElementById("q_id").value = d.$id;
+        document.getElementById("q_page").value = d.page;
+        document.getElementById("q_order").value = d.order || 1;
+        document.getElementById("q_question").value = d.question;
+        document.getElementById("q_answer").value = d.answer;
+        document.getElementById("q_active").value = d.active.toString();
+        openModal("modalQ");
       };
-
-      document.getElementById('formQ').addEventListener('submit', async (e) => {
+      document.getElementById("formQ").addEventListener("submit", async (e) => {
         e.preventDefault();
-        const id = document.getElementById('q_id').value;
+        const id = document.getElementById("q_id").value;
         const data = {
-          page: document.getElementById('q_page').value,
-          order: parseInt(document.getElementById('q_order').value),
-          question: document.getElementById('q_question').value,
-          answer: document.getElementById('q_answer').value,
-          active: document.getElementById('q_active').value === 'true'
+          page: document.getElementById("q_page").value,
+          order: parseInt(document.getElementById("q_order").value),
+          question: document.getElementById("q_question").value,
+          answer: document.getElementById("q_answer").value,
+          active: document.getElementById("q_active").value === "true",
         };
         try {
-          if (id) await call(`/databases/${DB}/collections/${COLLECTIONS.q}/documents/${id}`, { method: 'PATCH', body: JSON.stringify({ data }) });
-          else await call(`/databases/${DB}/collections/${COLLECTIONS.q}/documents`, { method: 'POST', body: JSON.stringify({ documentId: uniqueId(), data, permissions: [] }) });
-          toast('Pergunta salva com sucesso!'); closeModal('modalQ'); loadAll(); loadStats();
-        } catch (e) { 
-          toast(`Erro: ${e.message}`, 'error'); 
+          if (id)
+            await call(
+              `/databases/${DATABASE_ID}/collections/${COLLECTIONS.QUIZ}/documents/${id}`,
+              { method: "PATCH", body: JSON.stringify({ data }) },
+            );
+          else
+            await call(
+              `/databases/${DATABASE_ID}/collections/${COLLECTIONS.QUIZ}/documents`,
+              {
+                method: "POST",
+                body: JSON.stringify({
+                  documentId: uniqueId(),
+                  data,
+                  permissions: [],
+                }),
+              },
+            );
+          toast("Salvo!");
+          closeModal("modalQ");
+          loadAll();
+          loadStats();
+        } catch (e) {
+          toast("Erro");
         }
       });
-
-      window.seedQuiz = async () => {
-        if (!confirm('Deseja importar as 4 perguntas originais de Cirurgias para o banco de dados?')) return;
-        const btn = document.getElementById('btnSeed');
-        btn.disabled = true;
-        btn.textContent = 'Importando...';
-
-        const defaults = [
-          { q: 'As cirurgias vasculares têm risco?', a: 'Como qualquer procedimento cirúrgico, há riscos. Porém, com avaliação pré-operatória cuidadosa, equipe especializada e tecnologia moderna, os riscos são minimizados. A Dra. Mônica discute todos os aspectos na consulta.', p: 'cirurgias', o: 1 },
-          { q: 'As cirurgias deixam cicatrizes visíveis?', a: 'Técnicas como a microcirurgia de varizes e a ablação laser endovenosa deixam cicatrizes mínimas ou imperceptíveis. Cada caso é avaliado individualmente para escolher a abordagem menos invasiva.', p: 'cirurgias', o: 2 },
-          { q: 'Qual a recuperação após a cirurgia?', a: 'Depende do procedimento. Técnicas minimamente invasivas permitem retorno às atividades em 3–7 dias. Cirurgias mais extensas podem exigir repouso de até 21 dias com acompanhamento ambulatorial.', p: 'cirurgias', o: 3 },
-          { q: 'O plano de saúde cobre as cirurgias?', a: 'A maioria dos planos de saúde cobre procedimentos cirúrgicos vasculares com indicação médica. Nossa equipe pode auxiliar com a documentação necessária para autorização.', p: 'cirurgias', o: 4 }
-        ];
-
-        try {
-          for (const item of defaults) {
-            await call(`/databases/${DB}/collections/${COLLECTIONS.q}/documents`, { 
-              method: 'POST', 
-              body: JSON.stringify({ 
-                documentId: uniqueId(), 
-                data: {
-                  question: item.q,
-                  answer: item.a,
-                  page: item.p,
-                  order: item.o,
-                  active: true
-                }, 
-                permissions: [] 
-              }) 
-            });
-          }
-          toast('Perguntas importadas com sucesso!');
-          loadAll();
-        } catch (e) {
-          console.error(e);
-          toast('Erro: ' + e.message);
-        } finally {
-          btn.disabled = false;
-          btn.textContent = 'Importar Perguntas Padrão';
-        }
-      };
-      // DELETE UNIVERSAL
-      window.deleteDoc = async (coll, id, callback) => {
-        if (!confirm('Tem certeza que deseja excluir?')) return;
-        try {
-          await call(`/databases/${DB}/collections/${coll}/documents/${id}`, { method: 'DELETE' });
-          toast('Excluído com sucesso!'); loadAll(); loadStats();
-        } catch (e) { toast('Erro ao excluir'); }
-      }
-
-      // MIGRACAO CATEGORIAS
-      window.migrateCategories = async () => {
-        if (!confirm('Isto moverá os posts da aba Blog que possuem a categoria "Tratamentos" ou "Cirurgia" para suas respectivas abas. Continuar?')) return;
-        toast('Iniciando migração... aguarde.');
-        try {
-          const res = await call(`/databases/${DB}/collections/${COLLECTIONS.p}/documents?limit=100`);
-          let countT = 0, countC = 0;
-          for (const post of res.documents) {
-            const cat = post.category ? post.category.toLowerCase() : '';
-            if (cat.includes('tratamento')) {
-              await call(`/databases/${DB}/collections/${COLLECTIONS.t}/documents`, { 
-                method: 'POST', 
-                body: JSON.stringify({ documentId: uniqueId(), data: { title: post.title, slug: post.slug, cover_url: post.cover_url || '', description: post.content || '', subtitle: post.excerpt || '', active: post.published !== false, order: 99, highlight: false }, permissions: [] }) 
-              });
-              await call(`/databases/${DB}/collections/${COLLECTIONS.p}/documents/${post.$id}`, { method: 'DELETE' });
-              countT++;
-            } else if (cat.includes('cirurgia')) {
-              await call(`/databases/${DB}/collections/${COLLECTIONS.s}/documents`, { 
-                method: 'POST', 
-                body: JSON.stringify({ documentId: uniqueId(), data: { title: post.title, slug: post.slug, cover_url: post.cover_url || '', description: post.content || '', active: post.published !== false, order: 99 }, permissions: [] }) 
-              });
-              await call(`/databases/${DB}/collections/${COLLECTIONS.p}/documents/${post.$id}`, { method: 'DELETE' });
-              countC++;
-            }
-          }
-          toast(`Sucesso! ${countT} tratamentos e ${countC} cirurgias organizados.`);
-          loadAll(); loadStats();
-        } catch (e) {
-          console.error(e);
-          toast('Erro: ' + e.message, 'error');
-        }
-      };
-
-      // SETTINGS — Campos mapeados
-      const SETTINGS_FIELDS = [
-        'whatsapp','phone','email',
-        'address','city','cep','maps',
-        'hours_weekday','hours_sat','hours_sun','hours_obs',
-        'instagram','facebook','youtube','linkedin',
-        'maps_embed'
-      ];
-
-      window.loadSettings = async function() {
-        try {
-          const doc = await call(`/databases/${DB}/collections/${COLLECTIONS.cfg}/documents/${SETTINGS_DOC_ID}`);
-          SETTINGS_FIELDS.forEach(key => {
-            const el = document.getElementById(`cfg_${key}`);
-            if (el && doc[key] !== undefined) el.value = doc[key] || '';
-          });
-        } catch(e) {
-          // Documento ainda não existe — campos ficam vazios
-          console.info('site_settings ainda não criado.');
-        }
-      };
-
-      window.saveSettings = async function() {
-        const btn = document.getElementById('btnSaveSettings');
-        btn.disabled = true;
-        btn.textContent = 'Salvando...';
-        const data = {};
-        SETTINGS_FIELDS.forEach(key => {
-          const el = document.getElementById(`cfg_${key}`);
-          if (el) data[key] = el.value.trim();
-        });
-        try {
-          // Tenta atualizar; se não existir, cria com ID fixo
-          try {
-            await call(`/databases/${DB}/collections/${COLLECTIONS.cfg}/documents/${SETTINGS_DOC_ID}`, {
-              method: 'PATCH',
-              body: JSON.stringify({ data })
-            });
-          } catch(err) {
-            if (err.message && (err.message.includes('not found') || err.message.includes('404') || err.message.includes('Document'))) {
-              await call(`/databases/${DB}/collections/${COLLECTIONS.cfg}/documents`, {
-                method: 'POST',
-                body: JSON.stringify({ documentId: SETTINGS_DOC_ID, data, permissions: [] })
-              });
-            } else { throw err; }
-          }
-          toast('✅ Configurações salvas com sucesso!');
-        } catch(e) {
-          console.error(e);
-          toast('Erro ao salvar: ' + e.message);
-        } finally {
-          btn.disabled = false;
-          btn.textContent = 'Salvar Configurações';
-          btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Salvar Configurações`;
-        }
-      };
-
-      window.previewMap = function() {
-        const src = document.getElementById('cfg_maps_embed').value.trim();
-        if (!src) { toast('Cole o link do iframe do Google Maps primeiro.'); return; }
-        const preview = document.getElementById('mapPreview');
-        document.getElementById('mapFrame').src = src;
-        preview.style.display = 'block';
-      };
 
       // LOGOUT
-      document.getElementById('logoutBtn').addEventListener('click', async () => {
-        try { await call('/account/sessions/current', { method: 'DELETE' }); } catch(e) {}
-        localStorage.removeItem('cookieFallback');
-        window.location.replace('/admin');
-      });
+      document
+        .getElementById("logoutBtn")
+        ?.addEventListener("click", async () => {
+          try {
+            await call("/account/sessions/current", { method: "DELETE" });
+          } catch (e) {}
+          localStorage.removeItem("cookieFallback");
+          window.location.replace("/admin");
+        });
     </script>
   </body>
 </html>

@@ -1,0 +1,62 @@
+---
+title: Admin Sidebar Component
+---
+
+<script lang="ts">
+  // No script needed for static sidebar
+</script>
+
+<style>
+  .sidebar {
+    background: var(--surface-glass);
+    backdrop-filter: blur(12px);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: var(--sidebar-w);
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+  .sidebar__logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+  }
+  .sidebar__logo img { width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--accent); }
+  .sidebar__logo-name { font-family: var(--font-display); font-weight: 900; font-size: 1rem; color: var(--text); }
+  .sidebar__logo-sub { font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); text-transform: uppercase; }
+  .nav-label { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); margin-top: 1.5rem; }
+  .nav-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1.25rem; border-radius: 16px; color: var(--text); text-decoration: none; font-weight: 600; transition: var(--dur) var(--ease); }
+  .nav-link:hover { background: var(--accent-glow); color: var(--accent); }
+  .nav-link.active { background: var(--surface); border: 1px solid var(--accent); color: var(--accent); }
+</style>
+
+<aside class="sidebar">
+  <div class="sidebar__logo">
+    <img src="/img/logo-i-200px.jpg" alt="Spazio" />
+    <div>
+      <div class="sidebar__logo-name">SPAZIO VASCOLARE</div>
+      <div class="sidebar__logo-sub">Gerenciamento</div>
+    </div>
+  </div>
+  <nav>
+    <div class="nav-label">Overview</div>
+    <button class="nav-link active" data-tab="dash">Dashboard</button>
+    <div class="nav-label">Conteúdo do Site</div>
+    <button class="nav-link" data-tab="treatments">Tratamentos</button>
+    <button class="nav-link" data-tab="surgeries">Cirurgias</button>
+    <button class="nav-link" data-tab="blog">Blog Posts</button>
+    <button class="nav-link" data-tab="quiz">Quiz Geral</button>
+    <div class="nav-label">Configurações</div>
+    <button class="nav-link" data-tab="settings">Info Contato</button>
+    <div style="padding:1.5rem; border-top:1px solid var(--border); margin-top:auto;">
+      <button class="nav-link" id="logoutBtn" style="color:var(--red)">Sair do Painel</button>
+    </div>
+  </nav>
+</aside>

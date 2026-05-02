@@ -37,7 +37,7 @@ const description = treatment.description.substring(0, 160);
             <h1 class="hero-title">
               <span class="text-gradient">{treatment.title}</span>
             </h1>
-            {treatment.subtitle && <p class="hero-subtitle">{treatment.subtitle}</p>}
+            {treatment.subtitle && <p class="hero-subtitle" set:html={treatment.subtitle} />}
             
             <div class="hero-stats">
               {treatment.duration && (

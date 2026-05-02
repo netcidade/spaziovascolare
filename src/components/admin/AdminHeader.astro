@@ -1,0 +1,54 @@
+---
+title: Admin Header Component
+---
+
+<script lang="ts">
+  import { getCurrentUser } from '../../lib/appwrite.ts';
+  let user: any = null;
+  // Simple client‑side fetch of user info (if session exists)
+  getCurrentUser().then(u => (user = u)).catch(() => (user = null));
+</script>
+
+<style>
+  .admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-display);
+  }
+  .admin-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--text);
+  }
+  .admin-header .user-info {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+  .admin-header button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background var(--dur) var(--ease);
+  }
+  .admin-header button:hover {
+    background: var(--accent-deep);
+  }
+</style>
+
+<header class="admin-header">
+  <h1>Painel Administrativo</h1>
+  {#if user}
+    <div class="user-info">
+      {user.name ?? user.email}
+    </div>
+    <button id="logoutBtnHeader">Sair</button>
+  {/if}
+</header>

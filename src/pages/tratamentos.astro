@@ -60,70 +60,56 @@ try {
               >
                 <div class="treatment-row__flare" aria-hidden="true" />
 
-                <div class="treatment-row__content">
-                  {(t as any).cover_url && (
-                    <div class="treatment-row__image">
-                      <img
-                        src={(t as any).cover_url}
-                        alt={t.title}
-                        loading="lazy"
-                      />
-                    </div>
-                  )}
+                <a href={`/tratamentos/${t.slug}`} class="treatment-row__link">
+                  <div class="treatment-row__content">
+                    {(t as any).cover_url && (
+                      <div class="treatment-row__image">
+                        <img
+                          src={(t as any).cover_url}
+                          alt={t.title}
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
 
-                  <div class="treatment-row__text">
-                    <div class="treatment-row__header">
-                      <h2 class="treatment-row__title">{t.title}</h2>
-                      <p class="treatment-row__subtitle">{t.subtitle}</p>
-                    </div>
+                    <div class="treatment-row__text">
+                      <div class="treatment-row__header">
+                        <h2 class="treatment-row__title">{t.title}</h2>
+                        <p class="treatment-row__subtitle">{t.subtitle}</p>
+                      </div>
 
-                    <div class="treatment-row__desc" set:html={t.description || (t as any).desc || ""} />
+                      <div class="treatment-row__desc" set:html={t.description || (t as any).desc || ""} />
 
-                    <div class="treatment-row__meta">
-                      {t.duration && (
-                        <div class="meta-item">
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                          >
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12 6 12 12 16 14" />
+                      <div class="treatment-row__meta">
+                        {t.duration && (
+                          <div class="meta-item">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            Duração: {t.duration}
+                          </div>
+                        )}
+                        {t.recovery && (
+                          <div class="meta-item">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <path d="M22 11.08V12a10 10 0 11-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
+                            </svg>
+                            Recuperação: {t.recovery}
+                          </div>
+                        )}
+                      </div>
+
+                      <div class="treatment-row__footer">
+                        <span class="btn-read-more-ui">
+                          Saiba mais sobre este tratamento
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14m-7-7 7 7-7 7"/>
                           </svg>
-                          Duração: {t.duration}
-                        </div>
-                      )}
-                      {t.recovery && (
-                        <div class="meta-item">
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                          >
-                            <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-                            <polyline points="22 4 12 14.01 9 11.01" />
-                          </svg>
-                          Recuperação: {t.recovery}
-                        </div>
-                      )}
-                    </div>
-
-                    <div class="treatment-row__footer">
-                      <a href={`/tratamentos/${t.slug}`} class="btn-read-more">
-                        Saiba mais sobre este tratamento
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <path d="M5 12h14m-7-7 7 7-7 7"/>
-                        </svg>
-                      </a>
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </a>
               </article>
             ))
           }
@@ -332,20 +318,25 @@ try {
     margin-top: auto;
   }
 
-  .btn-read-more {
+  .treatment-row__link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .btn-read-more-ui {
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem 0;
     color: var(--accent);
     font-weight: 700;
-    text-decoration: none;
     font-size: 0.95rem;
     transition: all 0.3s;
     border-bottom: 2px solid transparent;
   }
 
-  .btn-read-more:hover {
+  .treatment-row:hover .btn-read-more-ui {
     gap: 1rem;
     border-bottom-color: var(--accent);
   }

@@ -46,19 +46,6 @@ const categories = ['Todos', ...Array.from(new Set(posts.map(p => p.category).fi
     <!-- Posts -->
     <section class="blog-section">
       <div class="container">
-        <!-- Category filter -->
-        <div class="category-filter" role="navigation" aria-label="Filtrar por categoria">
-          {categories.map((cat) => (
-            <button
-              class={`cat-btn ${cat === 'Todos' ? 'active' : ''}`}
-              data-category={cat}
-              type="button"
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
         {posts.length === 0 ? (
           <div class="empty-state glass">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
@@ -173,35 +160,6 @@ const categories = ['Todos', ...Array.from(new Set(posts.map(p => p.category).fi
   /* Blog section */
   .blog-section { padding-bottom: var(--space-xl, 7rem); }
 
-  /* Category filter */
-  .category-filter {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 3rem;
-  }
-
-  .cat-btn {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.45rem 1rem;
-    border-radius: 100px;
-    border: 1px solid rgba(212, 10, 91, 0.15);
-    background: transparent;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all 0.25s;
-  }
-
-  .cat-btn:hover, .cat-btn.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-  }
-
   /* Grid */
   .posts-grid {
     display: grid;
@@ -211,8 +169,12 @@ const categories = ['Todos', ...Array.from(new Set(posts.map(p => p.category).fi
 
   .post-card.featured {
     grid-column: span 3;
+  }
+
+  .post-card.featured .post-card__link {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
+    height: 100%;
   }
 
   /* Card */
@@ -316,7 +278,7 @@ const categories = ['Todos', ...Array.from(new Set(posts.map(p => p.category).fi
     margin-bottom: 0.25rem;
   }
 
-  .featured .post-card__title { font-size: 1.8rem; }
+  .featured .post-card__title { font-size: 2.25rem; margin-bottom: 1rem; }
 
   .post-card__excerpt {
     font-size: 0.88rem;
@@ -355,33 +317,23 @@ const categories = ['Todos', ...Array.from(new Set(posts.map(p => p.category).fi
   @media (max-width: 1024px) {
     .posts-grid { grid-template-columns: repeat(2, 1fr); }
     .post-card.featured { grid-column: span 2; }
-    .featured .post-card__link { display: flex; flex-direction: column; }
-    .featured .post-card__img-wrap { min-height: 240px; }
+    .post-card.featured .post-card__link {
+      grid-template-columns: 1fr;
+    }
+    .post-card.featured .post-card__img-wrap {
+      aspect-ratio: 16/9;
+      min-height: auto;
+    }
   }
 
   @media (max-width: 640px) {
     .posts-grid { grid-template-columns: 1fr; }
     .post-card.featured { grid-column: span 1; }
+    .featured .post-card__title { font-size: 1.5rem; }
+    .featured .post-card__body { padding: 1.5rem; }
   }
 </style>
 
 <script>
-  // Category filter
-  const btns = document.querySelectorAll<HTMLButtonElement>('.cat-btn');
-  const cards = document.querySelectorAll<HTMLElement>('.post-card');
-
-  btns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      btns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const cat = btn.dataset.category;
-      cards.forEach(card => {
-        if (cat === 'Todos' || card.dataset.category === cat) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
-  });
+  // Blog page interactions
 </script>
